@@ -27,6 +27,10 @@ class StartWindow extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
+		//JToolBar sideBar = new JToolBar();
+		//sideBar.setOrientation(VERTICAL);
+		
+		
 		JMenu file = new JMenu("Plik");
 		JMenu help = new JMenu("Pomoc");
 		menuBar.add(file);
@@ -53,12 +57,20 @@ class StartWindow extends JFrame {
 		toolbar.add(options_Button);
 		add(toolbar, BorderLayout.NORTH);
 		
+		ActionListener startGameEvent = new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				Sounds.playSound("/Sounds/MLGAirHorn.wav");
+			}
+		};
+		
 		ActionListener exitEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				System.exit(0);
 			}
 		};
 
+		newGame_Button.addActionListener(startGameEvent);
+		newGame.addActionListener(startGameEvent);
 		exit.addActionListener(exitEvent);
 	}
 }
