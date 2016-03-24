@@ -13,7 +13,7 @@ public class StartGame {
 		 */
 		JFrame startWindow = new StartWindow();
 		startWindow.setTitle("Space Invaders");
-		startWindow.setSize(300,400);
+		startWindow.setSize(600,400);
 		startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		startWindow.show();
 	}
@@ -67,11 +67,17 @@ class StartWindow extends JFrame {
 			public void actionPerformed(ActionEvent event) {
 				JOptionPane.showMessageDialog(null,
 						"Grzegorz Wojciechowski\nJakub Szajner\n"
-						+ "Studenci 4 semestru elektroniki Politechniki Warszawskiej");
+						+ "Studenci 4 semestru elektroniki Politechniki Warszawskiej", "About us", JOptionPane.INFORMATION_MESSAGE);
 			}
 		};
 
-		aboutUs.addActionListener(aboutUsEvent);
+		ActionListener instructionsEvent = new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				JOptionPane.showMessageDialog(null,
+						"Szczegó³owe zasady gry: ", "Instructions", JOptionPane.INFORMATION_MESSAGE);
+			}
+		};
+		
 		
 		ActionListener exitEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -81,6 +87,8 @@ class StartWindow extends JFrame {
 
 		newGame_Button.addActionListener(startGameEvent);
 		newGame.addActionListener(startGameEvent);
+		instructions.addActionListener(instructionsEvent);
+		aboutUs.addActionListener(aboutUsEvent);
 		exit.addActionListener(exitEvent);
 	}
 }
