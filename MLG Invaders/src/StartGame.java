@@ -66,7 +66,8 @@ class StartWindow extends JFrame {
 		ActionListener aboutUsEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				JOptionPane.showMessageDialog(null,
-						"Grzegorz Wojciechowski\nJakub Szajner");
+						"Grzegorz Wojciechowski\nJakub Szajner\n"
+						+ "Studenci 4 semestru elektroniki Politechniki Warszawskiej");
 			}
 		};
 
