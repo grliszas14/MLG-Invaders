@@ -63,6 +63,15 @@ class StartWindow extends JFrame {
 			}
 		};
 		
+		ActionListener aboutUsEvent = new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				JOptionPane.showMessageDialog(null,
+						"Grzegorz Wojciechowski\nJakub Szajner");
+			}
+		};
+
+		aboutUs.addActionListener(aboutUsEvent);
+		
 		ActionListener exitEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				System.exit(0);
