@@ -8,8 +8,7 @@ public class StartGame {
 	
 	public static void main(String[] args) {
 		/*
-		 * aglaglafdgllandfbiuaen
-		 * @id galgorgj
+		 * Setting params of start window
 		 */
 		JFrame startWindow = new StartWindow();
 		startWindow.setTitle("Space Invaders");
@@ -36,6 +35,9 @@ class StartWindow extends JFrame {
 		menuBar.add(file);
 		menuBar.add(help);
 		
+		/*
+		 * Adding buttons
+		 */
 		JMenuItem newGame = new JMenuItem("Nowa gra");
 		JMenuItem options = new JMenuItem("Opcje");
 		JMenuItem exit = new JMenuItem("Wyjœcie");
@@ -57,6 +59,9 @@ class StartWindow extends JFrame {
 		toolbar.add(options_Button);
 		add(toolbar, BorderLayout.NORTH);
 		
+		/*
+		 * Methods to make buttons work
+		 */
 		ActionListener startGameEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				Sounds.playSound("/Sounds/MLGAirHorn.wav");
@@ -84,7 +89,9 @@ class StartWindow extends JFrame {
 				System.exit(0);
 			}
 		};
-
+		/*
+		 * Setting events for buttons
+		 */
 		newGame_Button.addActionListener(startGameEvent);
 		newGame.addActionListener(startGameEvent);
 		instructions.addActionListener(instructionsEvent);
