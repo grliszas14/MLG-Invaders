@@ -12,9 +12,10 @@ public class StartGame {
 		 */
 		JFrame startWindow = new StartWindow();
 		startWindow.setTitle("Space Invaders");
-		startWindow.setSize(600,400);
+		startWindow.setSize(700,700);
 		startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		startWindow.show();
+		startWindow.setContentPane(new GamePanel());  //Shows the game panel 
 	}
 }
 
@@ -41,12 +42,10 @@ class StartWindow extends JFrame {
 		JMenuItem newGame = new JMenuItem("Nowa gra");
 		JMenuItem options = new JMenuItem("Opcje");
 		JMenuItem exit = new JMenuItem("Wyjœcie");
-		JMenuItem sound = new JMenuItem("DŸwiêk");
 		JMenuItem instructions = new JMenuItem("Instrukcja gry");
 		JMenuItem aboutUs = new JMenuItem("O nas");
 		file.add(newGame);
 		file.add(options);
-		file.add(sound);
 		file.add(exit);
 		help.add(instructions);
 		help.add(aboutUs);
