@@ -15,7 +15,6 @@ public class StartGame {
 		startWindow.setSize(700,700);
 		startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		startWindow.show();
-		startWindow.setContentPane(new GamePanel());  //Shows the game panel 
 	}
 }
 
@@ -26,6 +25,7 @@ class StartWindow extends JFrame {
 		ImageIcon optionsPic = new ImageIcon("src/Icons/optionsPic.png");
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		GamePanel gamePanel = new GamePanel();
 		
 		//JToolBar sideBar = new JToolBar();
 		//sideBar.setOrientation(VERTICAL);
@@ -57,6 +57,7 @@ class StartWindow extends JFrame {
 		toolbar.add(newGame_Button);
 		toolbar.add(options_Button);
 		add(toolbar, BorderLayout.NORTH);
+		add(gamePanel);
 		
 		/*
 		 * Methods to make buttons work
