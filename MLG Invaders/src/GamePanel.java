@@ -8,8 +8,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	private Thread thread;
 	private boolean running;
-	public static int HEIGHT = 400;
-	public static int WIDTH = 400;
+	public static int HEIGHT = 590;
+	public static int WIDTH = 500;
 	
 	private BufferedImage image;
 	private Graphics2D g;
@@ -20,11 +20,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	public GamePanel(){
 		super();
-		//TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
+		setPreferredSize(new Dimension(WIDTH,HEIGHT)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
 		setFocusable(true);
 		requestFocus();
 	}
-		
+	
+	
 	public void addNotify(){
 		super.addNotify();
 		if(thread == null){

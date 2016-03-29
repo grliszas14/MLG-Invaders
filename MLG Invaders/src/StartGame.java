@@ -20,6 +20,7 @@ public class StartGame {
 
 class StartWindow extends JFrame {
 	public StartWindow() {
+
 		
 		ImageIcon startGamePic = new ImageIcon("src/Icons/startGamePic.png");
 		ImageIcon optionsPic = new ImageIcon("src/Icons/optionsPic.png");
@@ -53,11 +54,13 @@ class StartWindow extends JFrame {
 		JButton newGame_Button = new JButton(startGamePic);
 		JButton options_Button = new JButton(optionsPic);
 		
-		final JToolBar toolbar = new JToolBar();
+		
+		add(gamePanel, BorderLayout.SOUTH);
+		JToolBar toolbar = new JToolBar();
 		toolbar.add(newGame_Button);
 		toolbar.add(options_Button);
 		add(toolbar, BorderLayout.NORTH);
-		add(gamePanel);
+		
 		
 		/*
 		 * Methods to make buttons work
@@ -65,6 +68,7 @@ class StartWindow extends JFrame {
 		ActionListener startGameEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				Sounds.playSound("/Sounds/MLGAirHorn.wav");
+				gamePanel.requestFocus();
 			}
 		};
 		
