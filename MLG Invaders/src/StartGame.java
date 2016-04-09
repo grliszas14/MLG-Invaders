@@ -27,6 +27,7 @@ class StartWindow extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		GamePanel gamePanel = new GamePanel();
+		Logo logo = new Logo();
 		
 		//JToolBar sideBar = new JToolBar();
 		//sideBar.setOrientation(VERTICAL);
@@ -56,10 +57,12 @@ class StartWindow extends JFrame {
 		
 		
 		add(gamePanel, BorderLayout.SOUTH);
+		//add(logo, BorderLayout.SOUTH);
 		JToolBar toolbar = new JToolBar();
 		toolbar.add(newGame_Button);
 		toolbar.add(options_Button);
 		add(toolbar, BorderLayout.NORTH);
+		
 		
 		
 		/*
@@ -68,7 +71,14 @@ class StartWindow extends JFrame {
 		ActionListener startGameEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				Sounds.playSound("/Sounds/MLGAirHorn.wav");
-				gamePanel.requestFocus();
+				Nickname nickname = new Nickname();
+				nickname.setTitle("Nickname");
+				nickname.setSize(300,140);
+				//nickname.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				nickname.show();
+				//add(gamePanel, BorderLayout.SOUTH);
+				//gamePanel.requestFocus();
+				
 			}
 		};
 		
