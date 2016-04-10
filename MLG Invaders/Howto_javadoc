@@ -1,0 +1,5 @@
+How to javadoc:
+1. Project / Generate Javadoc
+2. Javadoc command: C:\Program Files (x86)\Java\jdk1.7.0_55\bin\javadoc.exe  
+Czyli lokalizacja JDK na twoim kompie 
+3. Finish
