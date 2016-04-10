@@ -20,6 +20,9 @@ public class Enemy {
 	private boolean ready;
 	private boolean dead;
 	
+	/*
+	* Konstruktor
+	*/
 	public Enemy( int type, int rank){
 		this.type = type;
 		this.rank = rank;
@@ -47,18 +50,36 @@ public class Enemy {
 		dead = false;
 	}
 	
+	/*
+	*Metoda zwracajaca wspolrzedna x
+	*/
 	public double getx() { return x;}
+	/*
+	*Metoda zwracajaca wspolrzedna y
+	*/
 	public double gety() { return y;}
+	/*
+	*Metoda zwracajaca promien wroga
+	*/
 	public double getr() { return r;}
-		
+		/*
+		*Metoda zwracajaca czy obiekt zostal zabity
+		*/
 	public boolean isDead() { return dead; }
 	
+	/*
+	*Metoda aktualizujaca stan przeciwnika po trafieniu pociskiem
+	*/
 	public void hit(){
 		health--;
 		if(health <= 0 ) {
 			dead = true;
 		}
 	}
+	
+	/*
+	*Metoda aktualizująca położenie przeciwnika
+	*/
 	public void update(){
 		x += dx;
 		y += dy;
@@ -74,6 +95,9 @@ public class Enemy {
 		if(y > GamePanel.HEIGHT - r && dy > 0) dy = -dy;
 	}
 	
+	/*
+	*Metoda rysująca przeciwnika
+	*/
 	public void draw(Graphics2D g){
 		g.setColor(color1);
 		g.fillOval((int) x - r, (int) y - r, 2 * r, 2 * r);
