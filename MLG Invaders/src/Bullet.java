@@ -13,7 +13,9 @@ public class Bullet {
 	
 	private Color color1;
 	
-	//CONSTRUCTOR
+	/*
+	* Konstruktor
+	*/
 	public Bullet(double angle, int x, int y){
 		this.x = x;
 		this.y = y;
@@ -28,12 +30,24 @@ public class Bullet {
 		color1 = Color.YELLOW;
 	}
 	
-	//METHODS
 	
+	/*
+	* Metoda zwracajaca wspolrzedna x
+	*/
 	public double getx() { return x;}
+	
+	/*
+	*Metoda zwracajaca wspolrzedna y
+	*/
 	public double gety() { return y;}
+	/*
+	*Metoda zwracajaca promien pocisku
+	*/
 	public double getr() { return r;}
 	
+	/*
+	*Metoda aktualizujaca polożenie pocisku
+	*/
 	public boolean update(){
 		x += dx;
 		y += dy;
@@ -45,6 +59,9 @@ public class Bullet {
 		return false;
 	}
 	
+	/*
+	* Metoda rysująca pocisk
+	*/
 	public void draw(Graphics2D g){
 		
 		g.setColor(color1);
