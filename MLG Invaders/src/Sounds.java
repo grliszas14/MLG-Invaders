@@ -2,7 +2,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 /*
-*Klasa do odtwarzania dÅºwiÄ™kÃ³w
+*Klasa do odtwarzania dŸwiêków
 */
 public class Sounds {
 

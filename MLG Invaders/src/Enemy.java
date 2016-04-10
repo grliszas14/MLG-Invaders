@@ -23,17 +23,21 @@ public class Enemy {
 	/*
 	* Konstruktor
 	*/
-	public Enemy( int type, int rank){
+	public Enemy( int type, int rank){	//int spd, int hlth){
 		this.type = type;
 		this.rank = rank;
 		
 		if(type == 1) {
 			color1 = Color.RED;
 			if(rank == 1){
-				speed = 2;
-				r = 5;
-				health = 1;
-				
+				speed = (double)Integer.parseInt(GetProperties.getProperties().getProperty("EnemySpeed"));
+						
+				r = 			Integer.parseInt(GetProperties.getProperties().getProperty("EnemyRadius"));
+				health = 		Integer.parseInt(GetProperties.getProperties().getProperty("EnemyRadius"));
+								
+				// metoda: GetProperties.getProperties().getProperty("EnemySpeed") 
+				// w "..." podajesz klucz, zwraca wartoœæ jako String. Nasz plik jest jak s³ownik, tzn klucz=wartosc
+				// Integer.parseInt zamienia Stringa na inta
 			}
 		}
 		
@@ -78,7 +82,7 @@ public class Enemy {
 	}
 	
 	/*
-	*Metoda aktualizujÄ…ca poÅ‚oÅ¼enie przeciwnika
+	*Metoda aktualizuj¹ca po³o¿enie przeciwnika
 	*/
 	public void update(){
 		x += dx;
@@ -96,7 +100,7 @@ public class Enemy {
 	}
 	
 	/*
-	*Metoda rysujÄ…ca przeciwnika
+	*Metoda rysuj¹ca przeciwnika
 	*/
 	public void draw(Graphics2D g){
 		g.setColor(color1);

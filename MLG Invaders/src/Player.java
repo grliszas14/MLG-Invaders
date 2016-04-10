@@ -40,7 +40,7 @@ public class Player {
 		
 		firing = false;
 		firingTimer = System.nanoTime();
-		firingDelay = 200;
+		firingDelay = 200;	// mlg pars
 	}
 	
 	
@@ -51,7 +51,7 @@ public class Player {
 	public void setFiring(boolean b) { firing = b; }
 	
 	/*
-	*Metoda aktualizujÄ…ca poÅ‚oÅ¼enie postaci
+	*Metoda aktualizuj¹ca po³o¿enie postaci
 	*/
 	public void update() {
 		if(left){
@@ -88,7 +88,7 @@ public class Player {
 	}
 	
 	/*
-	*Metoda rysujÄ…ca postaÄ‡
+	*Metoda rysuj¹ca postaæ
 	*/
 	public void draw(Graphics2D g){
 		g.setColor(color1);

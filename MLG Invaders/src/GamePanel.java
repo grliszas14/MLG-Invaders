@@ -7,25 +7,32 @@ import java.awt.event.*;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
+	
 	private Thread thread;
 	private boolean running;
-	public static int HEIGHT = 590;
-	public static int WIDTH = 500;
+	
+	
+	public static int HEIGHT = 	Integer.parseInt(GetProperties.getProperties().getProperty("GameHeight"));	
+	public static int WIDTH = 	Integer.parseInt(GetProperties.getProperties().getProperty("GameWidth"));	
 	
 	private BufferedImage image;
 	private Graphics2D g;
-	private int FPS = 30;
+	private int FPS = Integer.parseInt(GetProperties.getProperties().getProperty("FPS"));
 	private double averageFPS;
+	private int numberOfEnemies = Integer.parseInt(GetProperties.getProperties().getProperty("numberOfEnemies"));
 	
 	public static Player player;
 	public static ArrayList<Bullet> bullets;
 	public static ArrayList<Enemy> enemies;
 	
-	public GamePanel(){
+	
+	
+	public GamePanel( ){ 
 		super();
 		setPreferredSize(new Dimension(WIDTH,HEIGHT)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
 		setFocusable(true);
 		requestFocus();
+		setEnabled(true);
 	}
 	
 	
@@ -36,6 +43,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			thread.start();
 			addKeyListener(this);
 		}
+	
+		
 	}
 	
 	public void run(){
@@ -47,8 +56,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		player = new Player();
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
-		for( int i = 0; i < 5; i++){
-			enemies.add(new Enemy(1,1));
+		
+		
+		for( int i = 0; i < numberOfEnemies; i++){
+			enemies.add(new Enemy(1,1));				
+			
 		}
 		
 		long startTime;
@@ -58,9 +70,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		long targetTime = 1000 / FPS;
 		
 		int frameCount = 0;
-		int maxFrameCount = 30;
+		int maxFrameCount = Integer.parseInt(GetProperties.getProperties().getProperty("maxFrameCount"));
 		
-		//Game loop
+		/*
+		 * Game loop 
+		 */
 		while(running){
 			
 			startTime = System.nanoTime();
@@ -145,10 +159,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	private void gameRender(){
-		g.setColor(Color.WHITE);
+		g.setColor(Color.magenta);
 		g.fillRect(0,0,WIDTH,HEIGHT);
 		g.setColor(Color.BLACK);
-		g.drawString("FPS: " + averageFPS,100,100);
+		g.drawString("FPS: " + averageFPS,440,300);
 		
 		//draw player
 		player.draw(g);

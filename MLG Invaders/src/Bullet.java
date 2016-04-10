@@ -22,7 +22,7 @@ public class Bullet {
 		r = 5;
 		
 		rad = Math.toRadians(angle);
-		speed = 15;
+		speed = (double) Integer.parseInt(GetProperties.getProperties().getProperty("BulletSpeed"));
 		dx = Math.cos(rad) * speed;
 		dy = Math.sin(rad) * speed;
 		
@@ -46,7 +46,7 @@ public class Bullet {
 	public double getr() { return r;}
 	
 	/*
-	*Metoda aktualizujaca poloÅ¼enie pocisku
+	*Metoda aktualizujaca polo¿enie pocisku
 	*/
 	public boolean update(){
 		x += dx;
@@ -60,7 +60,7 @@ public class Bullet {
 	}
 	
 	/*
-	* Metoda rysujÄ…ca pocisk
+	* Metoda rysuj¹ca pocisk
 	*/
 	public void draw(Graphics2D g){
 		
