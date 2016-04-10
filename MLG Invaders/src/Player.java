@@ -1,5 +1,7 @@
 import java.awt.*;
-
+/*
+*Klasa opisujaca postac gry
+*/
 public class Player {
 	
 	private int x;
@@ -24,7 +26,7 @@ public class Player {
 	private Color color2;
 	
 	/*
-	 * CONSTRUCTOR
+	 * Konstruktor
 	 */
 	public Player(){
 		
@@ -41,17 +43,16 @@ public class Player {
 		firingDelay = 200;
 	}
 	
-	/*
-	 * METHODS
-	 */
 	
 	public void setLeft(boolean b){ left = b; }
 	public void setRight(boolean b){ right = b; }
 	public void setUp(boolean b){ up = b; }
 	public void setDown(boolean b){ down = b; }
-	
 	public void setFiring(boolean b) { firing = b; }
 	
+	/*
+	*Metoda aktualizująca położenie postaci
+	*/
 	public void update() {
 		if(left){
 			dx = -speed;
@@ -86,6 +87,9 @@ public class Player {
 		}
 	}
 	
+	/*
+	*Metoda rysująca postać
+	*/
 	public void draw(Graphics2D g){
 		g.setColor(color1);
 		g.fillOval(x - r,y - r, 2 * r, 2 * r);
