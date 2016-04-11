@@ -23,7 +23,7 @@ public class Enemy {
 	/*
 	* Konstruktor
 	*/
-	public Enemy( int type, int rank){	//int spd, int hlth){
+	public Enemy( int type, int rank){
 		this.type = type;
 		this.rank = rank;
 		
@@ -31,13 +31,13 @@ public class Enemy {
 			color1 = Color.RED;
 			if(rank == 1){
 				speed = (double)Integer.parseInt(GetProperties.getProperties().getProperty("EnemySpeed"));
-						
-				r = 			Integer.parseInt(GetProperties.getProperties().getProperty("EnemyRadius"));
-				health = 		Integer.parseInt(GetProperties.getProperties().getProperty("EnemyRadius"));
+				r = Integer.parseInt(GetProperties.getProperties().getProperty("EnemyRadius"));
+				health = Integer.parseInt(GetProperties.getProperties().getProperty("EnemyHealth"));
 								
 				// metoda: GetProperties.getProperties().getProperty("EnemySpeed") 
-				// w "..." podajesz klucz, zwraca wartoœæ jako String. Nasz plik jest jak s³ownik, tzn klucz=wartosc
+				// w "..." podajesz klucz, zwraca wartoÅ“Ã¦ jako String. Nasz plik jest jak sÂ³ownik, tzn klucz=wartosc
 				// Integer.parseInt zamienia Stringa na inta
+				
 			}
 		}
 		
@@ -82,7 +82,7 @@ public class Enemy {
 	}
 	
 	/*
-	*Metoda aktualizuj¹ca po³o¿enie przeciwnika
+	*Metoda aktualizujÄ…ca poÅ‚oÅ¼enie przeciwnika
 	*/
 	public void update(){
 		x += dx;
@@ -100,7 +100,7 @@ public class Enemy {
 	}
 	
 	/*
-	*Metoda rysuj¹ca przeciwnika
+	*Metoda rysujÄ…ca przeciwnika
 	*/
 	public void draw(Graphics2D g){
 		g.setColor(color1);
