@@ -1,3 +1,4 @@
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	private BufferedImage image;
 	private Graphics2D g;
+	private Graphics2D g2;
 	private int FPS = Integer.parseInt(GetProperties.getProperties().getProperty("FPS"));
 	private double averageFPS;
 	private int numberOfEnemies = Integer.parseInt(GetProperties.getProperties().getProperty("numberOfEnemies"));
@@ -24,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public static Player player;
 	public static ArrayList<Bullet> bullets;
 	public static ArrayList<Enemy> enemies;
+	private Image background;
 	
 	
 	
@@ -33,6 +36,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		setFocusable(true);
 		requestFocus();
 		setEnabled(true);
+		
+		
 	}
 	
 	
@@ -51,6 +56,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
+		background = new ImageIcon(GetProperties.getProperties().getProperty(
+				"Background")).getImage();
 		running = true;
 		
 		player = new Player();
@@ -159,10 +166,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	private void gameRender(){
-		g.setColor(Color.magenta);
+		g.setColor(Color.WHITE);
 		g.fillRect(0,0,WIDTH,HEIGHT);
-		g.setColor(Color.BLACK);
-		g.drawString("FPS: " + averageFPS,440,300);
+		g.drawImage(background,0,0,null);
+		//g.setColor(Color.BLACK);
+		//g.drawString("FPS: " + averageFPS,440,300);
 		
 		//draw player
 		player.draw(g);
@@ -176,6 +184,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		for( int i = 0; i < enemies.size(); i++){
 			enemies.get(i).draw(g);
 		}
+		
 	}
 	
 	private void gameDraw(){
