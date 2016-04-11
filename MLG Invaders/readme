@@ -1,0 +1,12 @@
+Do zrobienia:Scalić StartGame z StartWindow tak jak bylo do tej pory.
+
+zmienic nazwe klasy z GetProperties na Config
+
+Zmienic nazwe klasy z Sounds na Sound
+
+stworzyc klase z metodami draw(), update(), ... która bdzie nadrzedna dla klas: Player, Bullet, Enemy, GetProperties(może nie)
+
+Metody gameDraw, gameRender, gameUpdate w klasie GamePanel powinny być jedna metoda
+
+
+
