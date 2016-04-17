@@ -2,7 +2,7 @@ Do zrobienia:Scalić StartGame z StartWindow tak jak bylo do tej pory.
 
 zmienic nazwe klasy z GetProperties na Config
 
-Zmienic nazwe klasy z Sounds na Sound
+Zmienic nazwe klasy z Sounds na Sound (nazwy klas nie mogą być w liczbie mnogiej: klasa jest jedna, wiele to może być obiektów)
 
 stworzyc klase z metodami draw(), update(), ... która bdzie nadrzedna dla klas: Player, Bullet, Enemy, GetProperties(może nie)
 
