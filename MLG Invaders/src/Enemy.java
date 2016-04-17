@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Enemy {
+public class Enemy extends Engine{
 	
 	private double x;
 	private double y;
@@ -20,7 +20,7 @@ public class Enemy {
 	private boolean ready;
 	private boolean dead;
 	
-	/*
+	/**
 	* Konstruktor
 	*/
 	public Enemy( int type, int rank){
@@ -30,9 +30,9 @@ public class Enemy {
 		if(type == 1) {
 			color1 = Color.RED;
 			if(rank == 1){
-				speed = (double)Integer.parseInt(GetProperties.getProperties().getProperty("EnemySpeed"));
-				r = Integer.parseInt(GetProperties.getProperties().getProperty("EnemyRadius"));
-				health = Integer.parseInt(GetProperties.getProperties().getProperty("EnemyHealth"));
+				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed"));
+				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius"));
+				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth"));
 								
 				// metoda: GetProperties.getProperties().getProperty("EnemySpeed") 
 				// w "..." podajesz klucz, zwraca wartoœæ jako String. Nasz plik jest jak s³ownik, tzn klucz=wartosc
@@ -54,24 +54,24 @@ public class Enemy {
 		dead = false;
 	}
 	
-	/*
+	/**
 	*Metoda zwracajaca wspolrzedna x
 	*/
 	public double getx() { return x;}
-	/*
+	/**
 	*Metoda zwracajaca wspolrzedna y
 	*/
 	public double gety() { return y;}
-	/*
+	/**
 	*Metoda zwracajaca promien wroga
 	*/
 	public double getr() { return r;}
-		/*
+		/**
 		*Metoda zwracajaca czy obiekt zostal zabity
 		*/
 	public boolean isDead() { return dead; }
 	
-	/*
+	/**
 	*Metoda aktualizujaca stan przeciwnika po trafieniu pociskiem
 	*/
 	public void hit(){
@@ -81,10 +81,10 @@ public class Enemy {
 		}
 	}
 	
-	/*
+	/**
 	*Metoda aktualizująca położenie przeciwnika
 	*/
-	public void update(){
+	public boolean update(){
 		x += dx;
 		y += dy;
 		
@@ -97,9 +97,10 @@ public class Enemy {
 		if(y < r && dy < 0) dy = -dy;
 		if(x > GamePanel.WIDTH - r && dx > 0) dx = -dx;
 		if(y > GamePanel.HEIGHT - r && dy > 0) dy = -dy;
+		return true;
 	}
 	
-	/*
+	/**
 	*Metoda rysująca przeciwnika
 	*/
 	public void draw(Graphics2D g){

@@ -13,15 +13,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private boolean running;
 	
 	
-	public static int HEIGHT = 	Integer.parseInt(GetProperties.getProperties().getProperty("GameHeight"));	
-	public static int WIDTH = 	Integer.parseInt(GetProperties.getProperties().getProperty("GameWidth"));	
+	public static int HEIGHT = 	Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
+	public static int WIDTH = 	Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
 	
 	private BufferedImage image;
 	private Graphics2D g;
 	private Graphics2D g2;
-	private int FPS = Integer.parseInt(GetProperties.getProperties().getProperty("FPS"));
+	private int FPS = Integer.parseInt(Config.getProperties().getProperty("FPS"));
 	private double averageFPS;
-	private int numberOfEnemies = Integer.parseInt(GetProperties.getProperties().getProperty("numberOfEnemies"));
+	private int numberOfEnemies = Integer.parseInt(Config.getProperties().getProperty("numberOfEnemies"));
 	
 	public static Player player;
 	public static ArrayList<Bullet> bullets;
@@ -29,9 +29,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private Image background;
 	
 	
-	
+	/**
+	 * create JPanel 
+	 * focus
+	 */
 	public GamePanel( ){ 
-		super();
+		super();	// create JPanel with double buffer
 		setPreferredSize(new Dimension(WIDTH,HEIGHT)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
 		setFocusable(true);
 		requestFocus();
@@ -52,11 +55,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 	}
 	
+	
+	/**
+	 * Load background
+	 * Create ArrayLists for enemies and bulets
+	 * Adding enemies
+	 * Game loop, FPS
+	 */
 	public void run(){
 		
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
-		background = new ImageIcon(GetProperties.getProperties().getProperty(
+		background = new ImageIcon(Config.getProperties().getProperty(
 				"Background")).getImage();
 		running = true;
 		
@@ -77,18 +87,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		long targetTime = 1000 / FPS;
 		
 		int frameCount = 0;
-		int maxFrameCount = Integer.parseInt(GetProperties.getProperties().getProperty("maxFrameCount"));
+		int maxFrameCount = Integer.parseInt(Config.getProperties().getProperty("maxFrameCount"));
 		
-		/*
+		/**
 		 * Game loop 
 		 */
 		while(running){
 			
 			startTime = System.nanoTime();
 			
-			gameUpdate();
-			gameRender();
-			gameDraw();
+				gameUpdate();
 			
 			URDTimeMillis = (System.nanoTime() - startTime) / 1000000;
 			
@@ -98,6 +106,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				Thread.sleep(waitTime);
 			}
 			catch(Exception e){
+				e.printStackTrace();
 			}
 			
 			totalTime += System.nanoTime() - startTime;
@@ -110,6 +119,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 	}
 	
+	
+	/**
+	 * Player, Bullet, Enemy update and collisions
+	 * drawing window, player, enemies, bullets
+	 */
 	private void gameUpdate(){
 		//player update
 		player.update();
@@ -163,14 +177,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			}
 		}
 		
-	}
-	
-	private void gameRender(){
+		/**
+		 *  Tworzy okno i rysuje 
+		 */
 		g.setColor(Color.WHITE);
 		g.fillRect(0,0,WIDTH,HEIGHT);
 		g.drawImage(background,0,0,null);
 		//g.setColor(Color.BLACK);
 		//g.drawString("FPS: " + averageFPS,440,300);
+		g.setColor(Color.BLUE);
+		g.drawString("NumberOfEnemies: " + enemies.size(), 375, 530);
 		
 		//draw player
 		player.draw(g);
@@ -185,16 +201,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			enemies.get(i).draw(g);
 		}
 		
-	}
-	
-	private void gameDraw(){
-		Graphics g2 = this.getGraphics();
-		g2.drawImage(image,0,0,null);
+		/*
+		 *  poprzedwnie gameDraw
+		 */
+		
+		g2 = (Graphics2D) this.getGraphics(); // poprzednio: Graphics g2 = this.getGraphics();
+		g2.drawImage(image,0,0,null); // na ostatnim miejscu obiekt ktory ma byc powiadomiony, ze rysowanie sie udalo tzw ImageObserver
 		g2.dispose();
 	}
 	
+	
+	
 	public void keyTyped(KeyEvent key){}
 	
+	
+	/**
+	 * Key events
+	 */
 	public void keyPressed(KeyEvent key){
 		
 		int keyCode = key.getKeyCode();

@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Bullet {
+public class Bullet extends Engine{
 	
 	private double x;
 	private double y;
@@ -22,7 +22,7 @@ public class Bullet {
 		r = 5;
 		
 		rad = Math.toRadians(angle);
-		speed = (double) Integer.parseInt(GetProperties.getProperties().getProperty("BulletSpeed"));
+		speed = (double) Integer.parseInt(Config.getProperties().getProperty("BulletSpeed"));
 		dx = Math.cos(rad) * speed;
 		dy = Math.sin(rad) * speed;
 		

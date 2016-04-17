@@ -1,8 +1,8 @@
 import java.awt.*;
-/*
+/**
 *Klasa opisujaca postac gry
 */
-public class Player {
+public class Player extends Engine{
 	
 	private int x;
 	private int y;
@@ -25,7 +25,7 @@ public class Player {
 	private Color color1;
 	private Color color2;
 	
-	/*
+	/**
 	 * Konstruktor
 	 */
 	public Player(){
@@ -50,10 +50,10 @@ public class Player {
 	public void setDown(boolean b){ down = b; }
 	public void setFiring(boolean b) { firing = b; }
 	
-	/*
+	/**
 	*Metoda aktualizuj¹ca po³o¿enie postaci
 	*/
-	public void update() {
+	public boolean update() {
 		if(left){
 			dx = -speed;
 		}
@@ -85,9 +85,10 @@ public class Player {
 				firingTimer = System.nanoTime();
 			}
 		}
+		return true;
 	}
 	
-	/*
+	/**
 	*Metoda rysuj¹ca postaæ
 	*/
 	public void draw(Graphics2D g){
