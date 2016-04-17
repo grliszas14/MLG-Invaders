@@ -1,12 +1,23 @@
+
+
+
+
+
+
+
+/** done 17.03.16 -> wszystko co Ignasiak zasugerował poprawić 
 Do zrobienia:Scalić StartGame z StartWindow tak jak bylo do tej pory.
 
 zmienic nazwe klasy z GetProperties na Config
 
 Zmienic nazwe klasy z Sounds na Sound (nazwy klas nie mogą być w liczbie mnogiej: klasa jest jedna, wiele to może być obiektów)
 
-stworzyc klase z metodami draw(), update(), ... która bdzie nadrzedna dla klas: Player, Bullet, Enemy, GetProperties(może nie)
+stworzyc klase z metodami draw(), update(), ... która bdzie nadrzedna dla klas: Player, Bullet, Enemy, 
+metoda Update w klasie Bullet zwraca wartość typu boolean, więc teraz Update w Player i Enemy tez zwraca boolean 
 
 Metody gameDraw, gameRender, gameUpdate w klasie GamePanel powinny być jedna metoda
-
-
-
+      w GamePanel private Graphics2D g2; nie bylo używane. Tzn bylo g2 uzywane
+    ale tak na prawde jako obiekt innej klasy (Graphic). Ujednolicilem to i dziala
+    
+Trochę komenatrzy, trochę porządku
+*/
