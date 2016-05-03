@@ -43,6 +43,7 @@ public class StartGame {
 			setJMenuBar(menuBar);
 			GamePanel gamePanel = new GamePanel(); //config
 			Logo logo = new Logo();
+			SidePanel sidePanel = new SidePanel();
 			
 			//JToolBar sideBar = new JToolBar();
 			//sideBar.setOrientation(VERTICAL);
@@ -58,7 +59,7 @@ public class StartGame {
 			 */
 			JMenuItem newGame = new JMenuItem("Nowa gra");
 			JMenuItem options = new JMenuItem("Opcje");
-			JMenuItem exit = new JMenuItem("Wyjœcie");
+			JMenuItem exit = new JMenuItem("WyjÅ“cie");
 			JMenuItem instructions = new JMenuItem("Instrukcja gry");
 			JMenuItem aboutUs = new JMenuItem("O nas");
 			file.add(newGame);
@@ -72,6 +73,7 @@ public class StartGame {
 			
 			
 			add(gamePanel, BorderLayout.CENTER);
+			add(sidePanel, BorderLayout.EAST);
 			
 			//add(logo, BorderLayout.SOUTH);
 			JToolBar toolbar = new JToolBar();
@@ -121,7 +123,7 @@ public class StartGame {
 			ActionListener instructionsEvent = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					JOptionPane.showMessageDialog(null,
-							"Szczegó³owe zasady gry: ", "Instructions", JOptionPane.INFORMATION_MESSAGE);
+							"SzczegÃ³Â³owe zasady gry: ", "Instructions", JOptionPane.INFORMATION_MESSAGE);
 				}
 			};
 			
