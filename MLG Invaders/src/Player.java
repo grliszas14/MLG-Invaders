@@ -43,7 +43,7 @@ public class Player extends Engine{
 		firingDelay = 200;	// mlg pars
 	}
 	
-	
+	public int getLives() { return lives; }
 	public void setLeft(boolean b){ left = b; }
 	public void setRight(boolean b){ right = b; }
 	public void setUp(boolean b){ up = b; }
@@ -51,7 +51,7 @@ public class Player extends Engine{
 	public void setFiring(boolean b) { firing = b; }
 	
 	/**
-	*Metoda aktualizuj¹ca po³o¿enie postaci
+	*Metoda aktualizujÂ¹ca poÂ³oÂ¿enie postaci
 	*/
 	public boolean update() {
 		if(left){
@@ -89,7 +89,7 @@ public class Player extends Engine{
 	}
 	
 	/**
-	*Metoda rysuj¹ca postaæ
+	*Metoda rysujÂ¹ca postaÃ¦
 	*/
 	public void draw(Graphics2D g){
 		g.setColor(color1);
