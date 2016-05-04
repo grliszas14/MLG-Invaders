@@ -15,6 +15,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	public static int HEIGHT = 	Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
 	public static int WIDTH = 	Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
+	//public static int HEIGHTPANEL = Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
+	//public static int WIDTHPANEL = Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
 	
 	private BufferedImage image;
 	private Graphics2D g;
@@ -26,6 +28,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public static Player player;
 	public static ArrayList<Bullet> bullets;
 	public static ArrayList<Enemy> enemies;
+	public static ArrayList<PowerUp> powerups;
 	private Image background;
 	
 	private long waveStartTimer;
@@ -41,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 */
 	public GamePanel( ){ 
 		super();	// create JPanel with double buffer
-		setPreferredSize(new Dimension(WIDTH,HEIGHT)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
+		setPreferredSize(new Dimension(WIDTH, HEIGHT)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
 		setFocusable(true);
 		requestFocus();
 		setEnabled(true);
@@ -64,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	/**
 	 * Load background
-	 * Create ArrayLists for enemies and bulets
+	 * Create ArrayLists for enemies and bullets
 	 * Adding enemies
 	 * Game loop, FPS
 	 */
@@ -87,6 +90,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		player = new Player();
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
+		powerups = new ArrayList<PowerUp>();
 		
 		
 		waveStartTimer = 0;
@@ -176,6 +180,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			enemies.get(i).update();
 		}
 		
+		//powerup update
+		for(int i = 0; i < powerups.size(); i++){
+			boolean remove = powerups.get(i).update();
+			if(remove){
+				powerups.remove(i);
+				i--;
+			}
+		}
+		
 		// bullet-enemy collision
 		for(int i = 0; i < bullets.size(); i++){
 			
@@ -207,7 +220,71 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		//check dead enemies
 		for(int i = 0; i < enemies.size(); i++){
 			if(enemies.get(i).isDead()){
+				Enemy e = enemies.get(i);
+				
+				//chance for powerup
+				double random = Math.random();
+				if(random < 0.001) powerups.add(new PowerUp(1, e.getx(), e.gety()));
+				else if(random < 0.02) powerups.add(new PowerUp(3, e.getx(), e.gety()));
+				else if(random < 0.12) powerups.add(new PowerUp(2, e.getx(), e.gety()));
+				
+				player.addScore(e.getType() + e.getRank());
 				enemies.remove(i);
+				i--;
+			}
+		}
+		
+		// player-enemy collision
+		if(!player.isRecovering()){
+			int px = player.getix();
+			int py = player.getiy();
+			int pr = player.getir();
+			for(int i = 0; i < enemies.size(); i++){
+				Enemy e = enemies.get(i);
+				double ex = e.getx();
+				double ey = e.gety();
+				double er = e.getr();
+				
+				double dx = px - ex;
+				double dy = py - ey;
+				double dist = Math.sqrt(dx * dx + dy * dy);
+				
+				if(dist < pr + er){
+					player.loseLife();
+				}
+			}
+		}
+		
+		//player-powerup collision
+		int px = player.getix();
+		int py = player.getiy();
+		int pr = player.getir();
+		for(int i = 0; i < powerups.size(); i++){
+			PowerUp p = powerups.get(i);
+			double x = p.getx();
+			double y = p.gety();
+			double r = p.getr();
+			
+			double dx = px - x;
+			double dy = py - y;
+			double dist = Math.sqrt(dx * dx + dy * dy);
+			
+			//collected powerup
+			
+			if(dist < pr + r){
+				
+				int type = p.getType();
+				
+				if(type == 1){
+					player.gainLife();
+				}
+				if(type == 2){
+					player.increasePower(1);
+				}
+				if(type ==3){
+					player.increasePower(2);
+				}
+				powerups.remove(i);
 				i--;
 			}
 		}
@@ -215,13 +292,33 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		/**
 		 *  Tworzy okno i rysuje 
 		 */
+		
+			
 		g.setColor(Color.WHITE);
 		g.fillRect(0,0,WIDTH,HEIGHT);
 		g.drawImage(background,0,0,null);
 		//g.setColor(Color.BLACK);
 		//g.drawString("FPS: " + averageFPS,440,300);
-		//g.setColor(Color.BLUE);
-		//g.drawString("NumberOfEnemies: " + enemies.size(), 375, 530);
+		g.setColor(Color.BLUE);
+		
+		//TYMCZASOWE
+		g.drawString("Score: " + player.score, 300, 530);
+		g.drawString("Lives: " + player.lives, 300, 510);
+		g.setColor(Color.YELLOW);
+		g.fillRect(300, 470, player.getPower() * 8 , 8);
+		g.setColor(Color.YELLOW.darker());
+		g.setStroke(new BasicStroke(2));
+		for( int i = 0; i < player.getRequiredPower(); i++){
+		 g.drawRect(300 + 8 *i,  470, 8,8);
+		}
+		//AZ DOTAD
+		
+		//draw side panel
+		//g.setColor(Color.WHITE);
+		//g.fillRect(500, 0, WIDTHPANEL, HEIGHTPANEL);
+		
+
+		
 		
 		//draw player
 		player.draw(g);
@@ -236,6 +333,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			enemies.get(i).draw(g);
 		}
 		
+		//draw powerups
+		for( int i = 0; i < powerups.size(); i++){
+			powerups.get(i).draw(g);
+		}
+		
 		//draw wave number
 		if(waveStartTimer != 0){
 			g.setFont(new Font("Century Gothic", Font.PLAIN, 23));
@@ -246,6 +348,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			g.setColor(new Color(0,0,0, alpha));
 			g.drawString(s, (WIDTH - length) / 2 , 3 * HEIGHT / 8);
 		}
+		
+		
 		
 		/*
 		 *  poprzedwnie gameDraw
@@ -272,13 +376,22 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			}
 		}
 		if(waveNumber == 3) {
-			for(int i = 0; i < 12; i++){
+			for(int i = 0; i < 8; i++){
 				enemies.add(new Enemy(1,1));
+			}
+			for(int i = 0; i < 4; i++){
+				enemies.add(new Enemy(2,1));
 			}
 		}
 		if(waveNumber == 4) {
-			for(int i = 0; i < 16; i++){
+			for(int i = 0; i < 4; i++){
 				enemies.add(new Enemy(1,1));
+			}
+			for(int i = 0; i < 4; i++){
+				enemies.add(new Enemy(2,1));
+			}
+			for(int i = 0; i < 4; i++){
+				enemies.add(new Enemy(3,1));
 			}
 		}
 	}
