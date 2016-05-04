@@ -40,6 +40,24 @@ public class Enemy extends Engine{
 				
 			}
 		}
+		//faster, stronger enemy
+		if(type == 2) {
+			color1 = Color.BLUE;
+			if(rank == 1){
+				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed2"));
+				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius2"));
+				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth2"));
+			}
+		} 
+		//slow but hard to kill enemy
+		if(type == 3) {
+			color1 = Color.GREEN;
+			if(rank == 1){
+				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed3"));
+				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius3"));
+				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth3"));
+			}
+		} 
 		
 		x = Math.random() * GamePanel.WIDTH / 2 + GamePanel.WIDTH / 4;
 		y = -r + 15;
@@ -71,6 +89,9 @@ public class Enemy extends Engine{
 		*/
 	public boolean isDead() { return dead; }
 	
+	public int getType() { return type; }
+	
+	public int getRank() { return rank; }
 	/**
 	*Metoda aktualizujaca stan przeciwnika po trafieniu pociskiem
 	*/
