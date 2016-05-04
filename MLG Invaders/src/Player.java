@@ -21,9 +21,17 @@ public class Player extends Engine{
 	private long firingTimer;
 	private long firingDelay;
 	
-	private int lives;
+	private boolean recovering;
+	private long recoveryTimer;
+	
+	public int lives;
+	public int score;
 	private Color color1;
 	private Color color2;
+	
+	private int powerLevel;
+	private int power;
+	private int[] requiredPower = { 1, 2, 3, 4, 5 };
 	
 	/**
 	 * Konstruktor
@@ -41,14 +49,53 @@ public class Player extends Engine{
 		firing = false;
 		firingTimer = System.nanoTime();
 		firingDelay = 200;	// mlg pars
+		
+		recovering = false;
+		recoveryTimer = 0;
+		
+		score = 0;
 	}
 	
 	public int getLives() { return lives; }
+	public int getScore() { return score; }	
+	
+
+	public boolean isRecovering() { return recovering; }
+	
 	public void setLeft(boolean b){ left = b; }
 	public void setRight(boolean b){ right = b; }
 	public void setUp(boolean b){ up = b; }
 	public void setDown(boolean b){ down = b; }
+	
 	public void setFiring(boolean b) { firing = b; }
+	
+	public void addScore(int i) { score += i; }
+	
+	public int getix() { return x;}
+	public int getiy() { return y;}
+	public int getir() { return r;}
+	
+	public void loseLife() {
+		lives--;
+		recovering = true;
+		recoveryTimer = System.nanoTime();
+	}
+	
+	public void gainLife() {
+		lives++;
+	}
+	
+	public void increasePower(int i){
+		power += i;
+		if(power >= requiredPower[powerLevel]){
+			power -= requiredPower[powerLevel];
+			powerLevel++;
+		}
+	}
+	
+	public int getPowerLevel(){return powerLevel; }
+	public int getPower(){ return power; }
+	public int getRequiredPower(){ return requiredPower[powerLevel]; }
 	
 	/**
 	*Metoda aktualizuj¹ca po³o¿enie postaci
@@ -80,10 +127,30 @@ public class Player extends Engine{
 		
 		if(firing){
 			long elapsed = (System.nanoTime() - firingTimer) / 1000000;
+			
 			if(elapsed > firingDelay){
-				GamePanel.bullets.add(new Bullet(270,x,y));
+				
 				firingTimer = System.nanoTime();
+				
+				if(powerLevel < 2){
+					GamePanel.bullets.add(new Bullet(270,x,y));
+				}
+				else if(powerLevel < 4){
+					GamePanel.bullets.add(new Bullet(270,x+5,y));
+					GamePanel.bullets.add(new Bullet(270,x-5,y));
+				}
+				else{
+					GamePanel.bullets.add(new Bullet(275,x+5,y));
+					GamePanel.bullets.add(new Bullet(265,x-5,y));
+					GamePanel.bullets.add(new Bullet(270,x,y));
+				}
 			}
+		}
+		
+		long elapsed = (System.nanoTime() - recoveryTimer) / 1000000;
+		if(elapsed > 2000) {
+			recovering = false;
+			recoveryTimer = 0;
 		}
 		return true;
 	}
@@ -92,12 +159,25 @@ public class Player extends Engine{
 	*Metoda rysuj¹ca postaæ
 	*/
 	public void draw(Graphics2D g){
-		g.setColor(color1);
-		g.fillOval(x - r,y - r, 2 * r, 2 * r);
 		
-		g.setStroke(new BasicStroke(3));
-		g.setColor(color1.darker());
-		g.fillOval(x - r,y - r, 2 * r, 2 * r);
-		g.setStroke(new BasicStroke(1));
+		if(recovering) {
+			g.setColor(color2);
+			g.fillOval(x - r,y - r, 2 * r, 2 * r);
+			
+			g.setStroke(new BasicStroke(3));
+			g.setColor(color2.darker());
+			g.drawOval(x - r,y - r, 2 * r, 2 * r);
+			g.setStroke(new BasicStroke(1));
+		}
+		else{
+			g.setColor(color1);
+			g.fillOval(x - r,y - r, 2 * r, 2 * r);
+			
+			g.setStroke(new BasicStroke(3));
+			g.setColor(color1.darker());
+			g.drawOval(x - r,y - r, 2 * r, 2 * r);
+			g.setStroke(new BasicStroke(1));
+		}
+		
 	}
 }
