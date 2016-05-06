@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public static ArrayList<Bullet> bullets;
 	public static ArrayList<Enemy> enemies;
 	public static ArrayList<PowerUp> powerups;
+	public static ArrayList<Bomb> bombs;
 	private Image background;
 	
 	private long waveStartTimer;
@@ -91,6 +92,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
 		powerups = new ArrayList<PowerUp>();
+		bombs = new ArrayList<Bomb>();
 		
 		
 		waveStartTimer = 0;
@@ -189,6 +191,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			}
 		}
 		
+		//bomb update
+		for(int i = 0; i < bombs.size(); i++){
+			boolean remove = bombs.get(i).update();
+			if(remove){
+				bombs.remove(i);
+				i--;
+			}
+		}
+		
 		// bullet-enemy collision
 		for(int i = 0; i < bullets.size(); i++){
 			
@@ -231,6 +242,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				getPlayer().addScore(e.getType() + e.getRank());
 				enemies.remove(i);
 				i--;
+			}
+			else{
+				Enemy e = enemies.get(i);
+				
+				//chance for enemy to drop the bomb
+				double randombomb = Math.random();
+				if(randombomb < 0.01) bombs.add(new Bomb(e.getx(), e.gety()));
 			}
 		}
 		
@@ -286,6 +304,53 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				}
 				powerups.remove(i);
 				i--;
+			}
+		}
+		
+		// player - bomb collision
+		if(!getPlayer().isRecovering()){
+			for(int i = 0; i < bombs.size(); i++){
+				Bomb b = bombs.get(i);
+				double x = b.getx();
+				double y = b.gety();
+				double r = b.getr();
+				
+				double dx = px - x;
+				double dy = py - y;
+				double dist = Math.sqrt(dx * dx + dy * dy);
+				
+				if(dist < pr + r){
+					getPlayer().loseLife();
+				}
+			}
+		}
+		
+		// bullet - bomb collision
+		for(int i = 0; i < bullets.size(); i++){
+			
+			Bullet b = bullets.get(i);
+			double bx = b.getx();
+			double by = b.gety();
+			double br = b.getr();
+			
+			for( int j = 0; j < bombs.size(); j++){
+				
+				Bomb bomba = bombs.get(j);
+				double bombx = bomba.getx();
+				double bomby = bomba.gety();
+				double bombr = bomba.getr();
+				
+				double dx = bx - bombx;
+				double dy = by - bomby;
+				double dist = Math.sqrt(dx * dx + dy * dy);
+				
+				if( dist < br + bombr){
+					bullets.remove(i);
+					bombs.remove(i);
+					i--;
+					break;
+				}
+				
 			}
 		}
 		
@@ -355,6 +420,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		//draw powerups
 		for( int i = 0; i < powerups.size(); i++){
 			powerups.get(i).draw(g);
+		}
+		
+		// draw bombs
+		for( int i = 0; i < bombs.size(); i++){
+			bombs.get(i).draw(g);
 		}
 		
 		//draw wave number
