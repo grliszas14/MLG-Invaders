@@ -43,7 +43,6 @@ public class StartGame {
 			setJMenuBar(menuBar);
 			GamePanel gamePanel = new GamePanel(); //config
 			Logo logo = new Logo();
-			SidePanel sidePanel = new SidePanel();
 			
 			//JToolBar sideBar = new JToolBar();
 			//sideBar.setOrientation(VERTICAL);
@@ -73,7 +72,7 @@ public class StartGame {
 			
 			
 			add(gamePanel, BorderLayout.CENTER);
-			add(sidePanel, BorderLayout.EAST);
+			
 			
 			//add(logo, BorderLayout.SOUTH);
 			JToolBar toolbar = new JToolBar();

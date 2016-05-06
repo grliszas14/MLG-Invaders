@@ -15,8 +15,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	public static int HEIGHT = 	Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
 	public static int WIDTH = 	Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
-	//public static int HEIGHTPANEL = Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
-	//public static int WIDTHPANEL = Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
+	public static int HEIGHTPANEL = Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
+	public static int WIDTHPANEL = Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
 	
 	private BufferedImage image;
 	private Graphics2D g;
@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private double averageFPS;
 	private int numberOfEnemies = Integer.parseInt(Config.getProperties().getProperty("numberOfEnemies"));
 	
-	public static Player player;
+	private static Player player;
 	public static ArrayList<Bullet> bullets;
 	public static ArrayList<Enemy> enemies;
 	public static ArrayList<PowerUp> powerups;
@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 */
 	public GamePanel( ){ 
 		super();	// create JPanel with double buffer
-		setPreferredSize(new Dimension(WIDTH, HEIGHT)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
+		setPreferredSize(new Dimension(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
 		setFocusable(true);
 		requestFocus();
 		setEnabled(true);
@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		running = true;
 		
 		
-		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				"Background")).getImage();
 		
 		
-		player = new Player();
+		setPlayer(new Player());
 		bullets = new ArrayList<Bullet>();
 		enemies = new ArrayList<Enemy>();
 		powerups = new ArrayList<PowerUp>();
@@ -165,7 +165,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 		
 		//player update
-		player.update();
+		getPlayer().update();
 		
 		//bullet update
 		for(int i = 0; i < bullets.size(); i++){
@@ -228,17 +228,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				else if(random < 0.02) powerups.add(new PowerUp(3, e.getx(), e.gety()));
 				else if(random < 0.12) powerups.add(new PowerUp(2, e.getx(), e.gety()));
 				
-				player.addScore(e.getType() + e.getRank());
+				getPlayer().addScore(e.getType() + e.getRank());
 				enemies.remove(i);
 				i--;
 			}
 		}
 		
 		// player-enemy collision
-		if(!player.isRecovering()){
-			int px = player.getix();
-			int py = player.getiy();
-			int pr = player.getir();
+		if(!getPlayer().isRecovering()){
+			int px = getPlayer().getix();
+			int py = getPlayer().getiy();
+			int pr = getPlayer().getir();
 			for(int i = 0; i < enemies.size(); i++){
 				Enemy e = enemies.get(i);
 				double ex = e.getx();
@@ -250,15 +250,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				double dist = Math.sqrt(dx * dx + dy * dy);
 				
 				if(dist < pr + er){
-					player.loseLife();
+					getPlayer().loseLife();
 				}
 			}
 		}
 		
 		//player-powerup collision
-		int px = player.getix();
-		int py = player.getiy();
-		int pr = player.getir();
+		int px = getPlayer().getix();
+		int py = getPlayer().getiy();
+		int pr = getPlayer().getir();
 		for(int i = 0; i < powerups.size(); i++){
 			PowerUp p = powerups.get(i);
 			double x = p.getx();
@@ -276,13 +276,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				int type = p.getType();
 				
 				if(type == 1){
-					player.gainLife();
+					getPlayer().gainLife();
 				}
 				if(type == 2){
-					player.increasePower(1);
+					getPlayer().increasePower(1);
 				}
 				if(type ==3){
-					player.increasePower(2);
+					getPlayer().increasePower(2);
 				}
 				powerups.remove(i);
 				i--;
@@ -295,33 +295,52 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 			
 		g.setColor(Color.WHITE);
-		g.fillRect(0,0,WIDTH,HEIGHT);
 		g.drawImage(background,0,0,null);
+		g.fillRect(WIDTH,0,WIDTHPANEL,HEIGHTPANEL);
 		//g.setColor(Color.BLACK);
 		//g.drawString("FPS: " + averageFPS,440,300);
 		g.setColor(Color.BLUE);
 		
-		//TYMCZASOWE
-		g.drawString("Score: " + player.score, 300, 530);
-		g.drawString("Lives: " + player.lives, 300, 510);
+		
+		String scor = "Wynik: ";
+		String life = "Zycia:";
+		String power = "Moc: ";
+		String valuescore = Integer.toString(player.score);
+		String valuehealth = Integer.toString(player.lives);
+		
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		int lengthscor = (int) g.getFontMetrics().getStringBounds(scor, g).getWidth();
+		int lengthlife = (int) g.getFontMetrics().getStringBounds(life, g).getWidth();
+		int lengthpower = (int) g.getFontMetrics().getStringBounds(power, g).getWidth();
+		int lengthvaluescor = (int) g.getFontMetrics().getStringBounds(valuescore, g).getWidth();
+		int lengthvaluehealth = (int) g.getFontMetrics().getStringBounds(valuehealth, g).getWidth();
+		
+		g.drawString(scor, WIDTH + (WIDTHPANEL - lengthscor)/ 2, HEIGHT / 12);
+		
+		g.drawString(power, WIDTH + (WIDTHPANEL - lengthpower)/ 2, 5 * HEIGHT / 12);
+		g.drawString(life, WIDTH + (WIDTHPANEL - lengthlife)/ 2, 9 *HEIGHT / 12);
+		//g.drawString("Score: " + getPlayer().score, 300, 530);
+		//g.drawString("Lives: " + getPlayer().lives, 300, 510);
+		g.drawString(valuescore, WIDTH + (WIDTHPANEL - lengthvaluescor)/ 2, 2 * HEIGHT /12);
 		g.setColor(Color.YELLOW);
-		g.fillRect(300, 470, player.getPower() * 8 , 8);
+		g.fillRect(WIDTH + 55, 6 * HEIGHT / 12, getPlayer().getPower() * 16 , 16);
 		g.setColor(Color.YELLOW.darker());
 		g.setStroke(new BasicStroke(2));
-		for( int i = 0; i < player.getRequiredPower(); i++){
-		 g.drawRect(300 + 8 *i,  470, 8,8);
+		for( int i = 0; i < getPlayer().getRequiredPower(); i++){
+		 g.drawRect(WIDTH + 55 + 16 * i, 6 * HEIGHT / 12, 16,16);
 		}
-		//AZ DOTAD
-		
-		//draw side panel
-		//g.setColor(Color.WHITE);
-		//g.fillRect(500, 0, WIDTHPANEL, HEIGHTPANEL);
-		
-
-		
+		for(int i = 0; i < player.getLives(); i++){
+			g.setColor(Color.WHITE);
+			g.fillOval(WIDTH + 70 + (20 * i), 10 * HEIGHT / 12, (int) 10 * 2, (int) 10 * 2);
+			((Graphics2D) g).setStroke( new BasicStroke(3));
+			g.setColor(Color.WHITE.darker());
+			g.drawOval(WIDTH + 70 + (20 * i), 10 * HEIGHT / 12, (int) 10 * 2, (int) 10 * 2);
+			((Graphics2D) g).setStroke( new BasicStroke(1));
+		}
 		
 		//draw player
-		player.draw(g);
+		getPlayer().draw(g);
 		
 		//draw bullets
 		for( int i = 0; i < bullets.size(); i++){
@@ -407,37 +426,47 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 		int keyCode = key.getKeyCode();
 		if(keyCode == KeyEvent.VK_LEFT){
-			player.setLeft(true);
+			getPlayer().setLeft(true);
 		}
 		if(keyCode == KeyEvent.VK_RIGHT){
-			player.setRight(true);
+			getPlayer().setRight(true);
 		}
 		if(keyCode == KeyEvent.VK_UP){
-			player.setUp(true);
+			getPlayer().setUp(true);
 		}
 		if(keyCode == KeyEvent.VK_DOWN){
-			player.setDown(true);
+			getPlayer().setDown(true);
 		}
 		if(keyCode == KeyEvent.VK_SPACE){
-			player.setFiring(true);
+			getPlayer().setFiring(true);
 		}
 	}
 	public void keyReleased(KeyEvent key){
 		int keyCode = key.getKeyCode();
 		if(keyCode == KeyEvent.VK_LEFT){
-			player.setLeft(false);
+			getPlayer().setLeft(false);
 		}
 		if(keyCode == KeyEvent.VK_RIGHT){
-			player.setRight(false);
+			getPlayer().setRight(false);
 		}
 		if(keyCode == KeyEvent.VK_UP){
-			player.setUp(false);
+			getPlayer().setUp(false);
 		}
 		if(keyCode == KeyEvent.VK_DOWN){
-			player.setDown(false);
+			getPlayer().setDown(false);
 		}
 		if(keyCode == KeyEvent.VK_SPACE){
-			player.setFiring(false);
+			getPlayer().setFiring(false);
 		}
+	}
+
+
+	public static Player getPlayer() {
+		return player;
+	}
+
+
+	public static void setPlayer(Player player) {
+		GamePanel.player = player;
 	}
 }

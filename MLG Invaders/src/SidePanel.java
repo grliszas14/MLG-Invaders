@@ -11,7 +11,7 @@ public class SidePanel extends JPanel {
 	private Graphics2D g;
 	public static int HEIGHT = 	Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
 	public static int WIDTH = 	Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));
-	
+	public static Player player2;
 	
 	
 	public SidePanel(){
@@ -23,6 +23,7 @@ public class SidePanel extends JPanel {
 		g = (Graphics2D) image.getGraphics();
 		paint(g);
 		setFocusable(true);
+		player2 = new Player();
 		
 	}
 	
@@ -81,5 +82,14 @@ public class SidePanel extends JPanel {
 		
 		
 		
+	}
+	
+	public static Player getPlayer() {
+		return player2;
+	}
+
+
+	public static void setPlayer(Player player2) {
+		SidePanel.player2 = player2;
 	}
 }
