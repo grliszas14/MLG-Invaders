@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public static ArrayList<Enemy> enemies;
 	public static ArrayList<PowerUp> powerups;
 	public static ArrayList<Bomb> bombs;
+	public static ArrayList<Explosion> explosions;
 	private Image background;
 	
 	private long waveStartTimer;
@@ -93,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		enemies = new ArrayList<Enemy>();
 		powerups = new ArrayList<PowerUp>();
 		bombs = new ArrayList<Bomb>();
+		explosions = new ArrayList<Explosion>();
 		
 		
 		waveStartTimer = 0;
@@ -196,6 +198,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			boolean remove = bombs.get(i).update();
 			if(remove){
 				bombs.remove(i);
+				i--;
+			}
+		}
+		
+		//explosion update
+		for( int i = 0; i < explosions.size(); i++){
+			boolean remove = explosions.get(i).update();
+			if(remove){
+				explosions.remove(i);
 				i--;
 			}
 		}
@@ -345,10 +356,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				double dist = Math.sqrt(dx * dx + dy * dy);
 				
 				if( dist < br + bombr){
+					explosions.add(new Explosion(bombx,bomby, (int) bombr, (int) bombr + 20));
 					bullets.remove(i);
-					bombs.remove(i);
+					bombs.remove(j);
 					i--;
 					break;
+					
+					
 				}
 				
 			}
@@ -404,6 +418,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			((Graphics2D) g).setStroke( new BasicStroke(1));
 		}
 		
+		
+		g.setColor(Color.BLUE);
+		g.drawString("ilosc bomb" + bombs.size(), WIDTH + (WIDTHPANEL - lengthlife)/ 2,11*HEIGHT / 12);
 		//draw player
 		getPlayer().draw(g);
 		
@@ -425,6 +442,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		// draw bombs
 		for( int i = 0; i < bombs.size(); i++){
 			bombs.get(i).draw(g);
+		}
+		
+		// draw explosions
+		for( int i = 0; i < explosions.size(); i++){
+			explosions.get(i).draw(g);
 		}
 		
 		//draw wave number
