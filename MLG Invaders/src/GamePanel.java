@@ -48,8 +48,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		super();	// create JPanel with double buffer
 		setPreferredSize(new Dimension(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
 		setFocusable(true);
-		requestFocus();
-		setEnabled(true);
+		//requestFocus();
+		//setEnabled(true);
 		
 		
 	}
@@ -139,6 +139,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				totalTime = 0;
 			}
 		}
+		
+		g.setColor(new Color(10,10,10));
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.setColor(Color.WHITE);
+		g.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+		String end = "G A M E  O V E R";
+		int lengthend = (int) g.getFontMetrics().getStringBounds(end, g).getWidth();
+		g.drawString(end, (WIDTH - lengthend) / 2, HEIGHT / 2 );
+		String wynik = "Twoj wynik: " + getPlayer().score;
+		int lengthwynik = (int) g.getFontMetrics().getStringBounds(wynik, g).getWidth();
+		g.drawString(wynik, (WIDTH - lengthwynik)/2, HEIGHT / 2 + 30);
+		g2 = (Graphics2D) this.getGraphics(); // poprzednio: Graphics g2 = this.getGraphics();
+		g2.drawImage(image,0,0,null); // na ostatnim miejscu obiekt ktory ma byc powiadomiony, ze rysowanie sie udalo tzw ImageObserver
+		g2.dispose();
 	}
 	
 	
@@ -261,6 +275,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				double randombomb = Math.random();
 				if(randombomb < 0.01) bombs.add(new Bomb(e.getx(), e.gety()));
 			}
+		}
+		
+		//check dead player
+		if(player.isDead()){
+			running = false;
 		}
 		
 		// player-enemy collision
@@ -419,8 +438,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 		
 		
-		g.setColor(Color.BLUE);
-		g.drawString("ilosc bomb" + bombs.size(), WIDTH + (WIDTHPANEL - lengthlife)/ 2,11*HEIGHT / 12);
 		//draw player
 		getPlayer().draw(g);
 		

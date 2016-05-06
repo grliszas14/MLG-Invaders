@@ -58,6 +58,7 @@ public class Player extends Engine{
 	
 	public int getLives() { return lives; }
 	public int getScore() { return score; }	
+	public boolean isDead() { return lives <=0; }
 	
 
 	public boolean isRecovering() { return recovering; }
