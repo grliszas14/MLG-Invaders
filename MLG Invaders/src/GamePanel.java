@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public static ArrayList<Explosion> explosions;
 	private Image background;
 	
+	
 	private long waveStartTimer;
 	private long waveStartTimerDiff;
 	private int waveNumber;
@@ -87,6 +88,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		background = new ImageIcon(Config.getProperties().getProperty(
 				"Background")).getImage();
+		
 		
 		
 		setPlayer(new Player());
@@ -320,7 +322,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			//collected powerup
 			
 			if(dist < pr + r){
-				
+				//Sound.playSound("src/Sounds/PowerUp.wav");
 				int type = p.getType();
 				
 				if(type == 1){
@@ -376,6 +378,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				
 				if( dist < br + bombr){
 					explosions.add(new Explosion(bombx,bomby, (int) bombr, (int) bombr + 20));
+					//Sound.playSound("/Sounds/Boom.wav");
 					bullets.remove(i);
 					bombs.remove(j);
 					i--;

@@ -1,5 +1,7 @@
 import java.awt.*;
 
+import javax.swing.ImageIcon;
+
 public class Enemy extends Engine{
 	
 	private double x;
@@ -19,11 +21,17 @@ public class Enemy extends Engine{
 	
 	private boolean ready;
 	private boolean dead;
+	private Image illuminatiEnemy1;
+	private Image illuminatiEnemy2;
+	private Image illuminatiEnemy3;
 	
 	/**
 	* Konstruktor
 	*/
 	public Enemy( int type, int rank){
+		illuminatiEnemy1 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy1")).getImage();
+		illuminatiEnemy2 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy2")).getImage();
+		illuminatiEnemy3 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy3")).getImage();
 		this.type = type;
 		this.rank = rank;
 		
@@ -45,7 +53,7 @@ public class Enemy extends Engine{
 			color1 = Color.BLUE;
 			if(rank == 1){
 				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed2"));
-				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius2"));
+				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius"));
 				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth2"));
 			}
 		} 
@@ -54,7 +62,7 @@ public class Enemy extends Engine{
 			color1 = Color.GREEN;
 			if(rank == 1){
 				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed3"));
-				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius3"));
+				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius"));
 				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth3"));
 			}
 		} 
@@ -125,13 +133,17 @@ public class Enemy extends Engine{
 	*Metoda rysująca przeciwnika
 	*/
 	public void draw(Graphics2D g){
-		g.setColor(color1);
-		g.fillOval((int) x - r, (int) y - r, 2 * r, 2 * r);
 		
-		g.setStroke(new BasicStroke(3));
-		g.setColor(color1.darker());
-		g.drawOval((int) x - r,(int) y - r, 2 * r, 2 * r);
-		g.setStroke(new BasicStroke(1));
+		//g.setColor(color1);
+		//g.fillOval((int) x - r, (int) y - r, 2 * r, 2 * r);
+		
+		//g.setStroke(new BasicStroke(3));
+		//g.setColor(color1.darker());
+		//g.drawOval((int) x - r,(int) y - r, 2 * r, 2 * r);
+		//g.setStroke(new BasicStroke(1));
+		if(type == 1) g.drawImage(illuminatiEnemy1, (int) x - r, (int) y, null);
+		if(type == 2) g.drawImage(illuminatiEnemy2, (int) x - r, (int) y, null);
+		if(type == 3) g.drawImage(illuminatiEnemy3, (int) x - r, (int) y, null);
 	}
 	
 }
