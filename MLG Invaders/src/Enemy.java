@@ -110,6 +110,8 @@ public class Enemy extends Engine{
 		health--;
 		if(health <= 0 ) {
 			dead = true;
+			double random = Math.random();
+			if(random < 0.1) Sound.playSound("/Sounds/Headshot.wav");
 		}
 	}
 	
