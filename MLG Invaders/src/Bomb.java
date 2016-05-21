@@ -16,6 +16,11 @@ public class Bomb extends Engine{
 	
 	private Image bombka;
 	
+	/**
+	 * Tworzy bombe, jej grafike, ustawia jej rozmiar i polozenie
+	 * @param x
+	 * @param y
+	 */
 	public Bomb(double x, double y){
 		bombka = new ImageIcon(Config.getProperties().getProperty("Bombka")).getImage();
 		this.x = x;
@@ -26,6 +31,9 @@ public class Bomb extends Engine{
 		r = 10;
 	}
 	
+	/**
+	 * zmienia polozenie bomby
+	 */
 	public boolean update() {
 		y += 2;
 		
@@ -36,7 +44,9 @@ public class Bomb extends Engine{
 		return false;
 	}
 	
-	
+	/**
+	 * rysuje bombe 
+	 */
 	public void draw(Graphics2D g){
 		//g.setColor(color1);
 		//g.fillOval((int) x - r, (int) y - r + 50, 2 * r, 2 * r);

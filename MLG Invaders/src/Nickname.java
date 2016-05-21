@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-/*
+/**
 *Okienko które oczekuje wpisania nicku przy rozpoczêciu nowej gry
 */
 public class Nickname extends JFrame{

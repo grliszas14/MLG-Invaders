@@ -1,7 +1,7 @@
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-/*
+/**
 *Klasa do odtwarzania dŸwiêków
 */
 public class Sound {
@@ -19,5 +19,6 @@ public class Sound {
 				}
 			}
 		}).start();
+		
 	}
 }

@@ -13,7 +13,9 @@ public class SidePanel extends JPanel {
 	public static int WIDTH = 	Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));
 	public static Player player2;
 	
-	
+	/**
+	 * Tworzy boczny panel
+	 */
 	public SidePanel(){
 		super();
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -26,7 +28,9 @@ public class SidePanel extends JPanel {
 		player2 = new Player();
 		
 	}
-	
+	/**
+	 * rysuje zawartosc bocznego panelu
+	 */
 	public void paint(Graphics g){
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, WIDTH, HEIGHT);

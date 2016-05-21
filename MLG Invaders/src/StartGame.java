@@ -6,10 +6,11 @@ import javax.swing.*;
 
 public class StartGame {
 	
+	/**
+	 * Setting params of start window
+	 */
 	public static void main(String[] args) throws IOException {
-		/**
-		 * Setting params of start window
-		 */
+		
 		StartWindow startWindow = new StartWindow();
 		startWindow.setTitle("Space Invaders");
 		
@@ -24,7 +25,7 @@ public class StartGame {
 		
 		// test wczytywania konfigu 
 		
-		//String test = GetProperties.getProperties().getProperty("mlg.WindowHeight");
+		//String test = Confgi.getProperties().getProperty("mlg.WindowHeight");
 		//System.out.println(test);					
 	}
 }

@@ -14,7 +14,7 @@ public class Bullet extends Engine{
 	private Color color1;
 	
 	/*
-	* Konstruktor
+	* Konstruktor pocisku, ustawia polozenie, kolor, wymiary i predkosc
 	*/
 	public Bullet(double angle, int x, int y){
 		this.x = x;

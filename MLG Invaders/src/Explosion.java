@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Explosion {
+public class Explosion extends Engine{
 
 	private double x;
 	private double y;

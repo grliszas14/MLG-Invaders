@@ -12,7 +12,7 @@ public class PowerUp extends Engine{
 	public double gety() { return y;}
 	public double getr() { return r;}
 	/**
-	 * Konstruktor
+	 * Konstruktor powerupa
 	 */
 	
 	public PowerUp(int type, double x, double y){
@@ -35,6 +35,9 @@ public class PowerUp extends Engine{
 	}
 	public int getType() { return type; }
 	
+	/**
+	 * aktualizuje polozenie power upa
+	 */
 	public boolean update() {
 		y += 2;
 		
@@ -44,7 +47,9 @@ public class PowerUp extends Engine{
 		
 		return false;
 	}
-	
+	/**
+	 * rysuje power upa
+	 */
 	public void draw(Graphics2D g){
 		g.setColor(color1);
 		g.fillRect((int) x - r, (int) y - r, 2 * r, 2 * r);

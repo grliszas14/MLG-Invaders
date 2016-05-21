@@ -8,7 +8,7 @@ public final class Config {
 
 	private static Properties properties ;
 	
-	/*
+	/**
 	 * Podanie zrodla pliku konfiguracyjnego
 	 */
 	static {
@@ -19,7 +19,7 @@ public final class Config {
 		}
 	}
 	
-	/*
+	/**
 	 * Pobieranie danych z pliku 
 	 */
 	private static Properties get(String file) throws IOException {

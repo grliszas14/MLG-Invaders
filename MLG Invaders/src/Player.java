@@ -1,6 +1,6 @@
 import java.awt.*;
 /**
-*Klasa opisujaca postac gry
+*Klasa opisujaca postac gry, aktualizuje polozenie
 */
 public class Player extends Engine{
 	
@@ -34,7 +34,7 @@ public class Player extends Engine{
 	private int[] requiredPower = { 1, 2, 3, 4, 5 };
 	
 	/**
-	 * Konstruktor
+	 * Konstruktor playera
 	 */
 	public Player(){
 		
@@ -48,8 +48,9 @@ public class Player extends Engine{
 		
 		firing = false;
 		firingTimer = System.nanoTime();
-		firingDelay = 200;	// mlg pars
+		firingDelay = Integer.parseInt(Config.getProperties().getProperty("firingDelay"));
 		
+				
 		recovering = false;
 		recoveryTimer = 0;
 		
@@ -76,16 +77,25 @@ public class Player extends Engine{
 	public int getiy() { return y;}
 	public int getir() { return r;}
 	
+	/**
+	 * Zmniejsza liczbe zyc o jeden
+	 */
 	public void loseLife() {
 		lives--;
 		recovering = true;
 		recoveryTimer = System.nanoTime();
 	}
 	
+	/**
+	 * zwieksza liczbe zyc o jeden
+	 */
 	public void gainLife() {
 		lives++;
 	}
 	
+	/**
+	 * zwieksza moc ataku
+	 */
 	public void increasePower(int i){
 		power += i;
 		if(power >= requiredPower[powerLevel]){
@@ -99,7 +109,7 @@ public class Player extends Engine{
 	public int getRequiredPower(){ return requiredPower[powerLevel]; }
 	
 	/**
-	*Metoda aktualizuj¹ca po³o¿enie postaci
+	*Metoda aktualizujaca po�o�enie postaci
 	*/
 	public boolean update() {
 		if(left){
@@ -148,6 +158,7 @@ public class Player extends Engine{
 			}
 		}
 		
+		// 2 sekundy niesmiertelnosci po stracie jedenego zycia 
 		long elapsed = (System.nanoTime() - recoveryTimer) / 1000000;
 		if(elapsed > 2000) {
 			recovering = false;
@@ -157,7 +168,7 @@ public class Player extends Engine{
 	}
 	
 	/**
-	*Metoda rysuj¹ca postaæ
+	*Metoda rysujaca postac gracza
 	*/
 	public void draw(Graphics2D g){
 		

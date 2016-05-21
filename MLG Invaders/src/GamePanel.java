@@ -13,10 +13,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private boolean running;
 	
 	
-	public static int HEIGHT = 	Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
-	public static int WIDTH = 	Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
-	public static int HEIGHTPANEL = Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
-	public static int WIDTHPANEL = Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
+	public static int HEIGHT = 		Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
+	public static int WIDTH = 		Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
+	public static int HEIGHTPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
+	public static int WIDTHPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
 	
 	private BufferedImage image;
 	private Graphics2D g;
@@ -38,7 +38,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private long waveStartTimerDiff;
 	private int waveNumber;
 	private boolean waveStart;
-	private int waveDelay = 2000;
+	private int waveDelay = 2000;	// pars
+	
+	// tests 15.05.16
+	/**
+	 * Ukryty bufor
+	 */
+	//Image offscr = null;
+	
+	/**
+	 * kontekst graficzny ukrytego bufora
+	 */
+	//Graphics offscrgr = null;
 	
 	
 	/**
@@ -63,6 +74,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			thread.start();
 			addKeyListener(this);
 		}
+		/// tests 15.05.16
+		// setPreferredSize(new Dimension(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL));
+		//offscr = createImage(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL);
+		//offscrgr = offscr.getGraphics();
 	
 		
 	}
@@ -125,6 +140,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			URDTimeMillis = (System.nanoTime() - startTime) / 1000000;
 			
 			waitTime = targetTime - URDTimeMillis;
+			
+			
+			// kontrola zmiennych 
+			System.out.println(targetTime );
+			System.out.println(URDTimeMillis);
+			System.out.println(waitTime);
+			System.out.println(" \t\t\t ...");
 			
 			try{
 				Thread.sleep(waitTime);
@@ -322,7 +344,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			//collected powerup
 			
 			if(dist < pr + r){
-				//Sound.playSound("src/Sounds/PowerUp.wav");
+				Sound.playSound("/Sounds/PowerUp.wav");
 				int type = p.getType();
 				
 				if(type == 1){
@@ -357,7 +379,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			}
 		}
 		
-		// bullet - bomb collision
+		// bullet - bomb collision (explosions)
 		for(int i = 0; i < bullets.size(); i++){
 			
 			Bullet b = bullets.get(i);
@@ -378,7 +400,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				
 				if( dist < br + bombr){
 					explosions.add(new Explosion(bombx,bomby, (int) bombr, (int) bombr + 20));
-					//Sound.playSound("/Sounds/Boom.wav");
+					Sound.playSound("/Sounds/Boom.wav");
 					bullets.remove(i);
 					bombs.remove(j);
 					i--;
@@ -482,8 +504,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 		
 		
-		/*
-		 *  poprzedwnie gameDraw
+		/**
+		 *  poprzednie gameDraw
+		 *  tutaj dopiero pokazujemy wszystko na ekran 
 		 */
 		
 		g2 = (Graphics2D) this.getGraphics(); // poprzednio: Graphics g2 = this.getGraphics();
@@ -491,6 +514,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		g2.dispose();
 	}
 	
+	
+	/**
+	 * tworzy przeciwnikow w zaleznosci od numeru fali
+	 */
 	private void createNewEnemies(){
 		
 		enemies.clear();
@@ -528,6 +555,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	
+	/**
+	 * pusta metoda
+	 */
 	public void keyTyped(KeyEvent key){}
 	
 	
@@ -553,6 +583,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			getPlayer().setFiring(true);
 		}
 	}
+	/**
+	 * key events
+	 */
 	public void keyReleased(KeyEvent key){
 		int keyCode = key.getKeyCode();
 		if(keyCode == KeyEvent.VK_LEFT){

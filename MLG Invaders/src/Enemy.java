@@ -26,7 +26,9 @@ public class Enemy extends Engine{
 	private Image illuminatiEnemy3;
 	
 	/**
-	* Konstruktor
+	* Konstruktor przeciwnika. 
+	* Wczytuje obrazki, ustawia predkosc, promien i zycie
+	* Przeciwnicy o roznych trudnosciach
 	*/
 	public Enemy( int type, int rank){
 		illuminatiEnemy1 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy1")).getImage();
@@ -92,6 +94,7 @@ public class Enemy extends Engine{
 	*Metoda zwracajaca promien wroga
 	*/
 	public double getr() { return r;}
+	
 		/**
 		*Metoda zwracajaca czy obiekt zostal zabity
 		*/
@@ -111,7 +114,7 @@ public class Enemy extends Engine{
 	}
 	
 	/**
-	*Metoda aktualizująca położenie przeciwnika
+	*  aktualizacja polozenia przeciwnika
 	*/
 	public boolean update(){
 		x += dx;
@@ -130,7 +133,7 @@ public class Enemy extends Engine{
 	}
 	
 	/**
-	*Metoda rysująca przeciwnika
+	*Metoda rysujaca przeciwnika
 	*/
 	public void draw(Graphics2D g){
 		
