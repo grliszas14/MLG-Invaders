@@ -15,7 +15,7 @@ public class Nickname {
 
 		private JFrame frame;
 		
-	public Nickname(){
+	public Nickname(JFrame gameFrame, GamePanel gamePanel, Logo logo){
 		JPanel nickPanel = new JPanel();
 		JPanel belowPanel = new JPanel();
 		JTextField nick = new JTextField(20);
@@ -45,9 +45,10 @@ public class Nickname {
 		ActionListener okEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				String nickname = nick.getText();
-				
+				gameFrame.remove(logo);
+				gameFrame.add(gamePanel, BorderLayout.CENTER);
 				frame.dispose();
-				
+				gameFrame.revalidate();
 			}
 		};
 		

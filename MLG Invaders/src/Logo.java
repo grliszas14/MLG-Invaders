@@ -14,17 +14,17 @@ public class Logo extends JPanel {
 	public Logo(){
 		super();
 		setPreferredSize(new Dimension(LOGOWIDTH,LOGOHEIGHT));
-	//	showPNG();
+		showPNG();
 	//	setFocusable(true);
 	}
 	/**
 	 * pokazuje ikone PNG 
 	 */
 	public void showPNG(){
-	/*	ImageIcon icon = new ImageIcon("src/Icons/majn.png");
+		ImageIcon icon = new ImageIcon("src/Icons/majn.png");
 		JLabel label = new JLabel();
 		label.setIcon(icon);
 		add(label);
-	*/
+	
 	}
 }

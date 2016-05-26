@@ -12,14 +12,14 @@ public class StartGame {
 	public static void main(String[] args) throws IOException {
 		
 		StartWindow startWindow = new StartWindow();
-		startWindow.setTitle("Space Invaders");
+		//startWindow.setTitle("Space Invaders");
 		
-		int WindowHeight	= Integer.parseInt(Config.getProperties().getProperty("WindowHeight"));
-		int WindowWidth		= Integer.parseInt(Config.getProperties().getProperty("WindowWidth"));
-		startWindow.setSize(WindowWidth,WindowHeight);	
+		//int WindowHeight	= Integer.parseInt(Config.getProperties().getProperty("WindowHeight"));
+		//int WindowWidth		= Integer.parseInt(Config.getProperties().getProperty("WindowWidth"));
+		//startWindow.setSize(WindowWidth,WindowHeight);	
 										
-		startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		startWindow.show();
+		//startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//startWindow.show();
 		
 		
 		
@@ -31,19 +31,25 @@ public class StartGame {
 }
 	
 	
-	class StartWindow extends JFrame {
+	class StartWindow {
 		
+		
+		private JFrame gameFrame;
+		int WindowHeight	= Integer.parseInt(Config.getProperties().getProperty("WindowHeight"));
+		int WindowWidth		= Integer.parseInt(Config.getProperties().getProperty("WindowWidth"));
 		//public Config config ;
 		//public int a =5;
 		public StartWindow() throws IOException {
 
+			gameFrame = new JFrame();
 			//Config config = new Config() ;
 			ImageIcon startGamePic = new ImageIcon("src/Icons/startGamePic.png");
 			ImageIcon optionsPic = new ImageIcon("src/Icons/optionsPic.png");
 			JMenuBar menuBar = new JMenuBar();
-			setJMenuBar(menuBar);
+			gameFrame.setJMenuBar(menuBar);
 			GamePanel gamePanel = new GamePanel(); //config
 			Logo logo = new Logo();
+			
 			
 			//JToolBar sideBar = new JToolBar();
 			//sideBar.setOrientation(VERTICAL);
@@ -70,16 +76,17 @@ public class StartGame {
 			
 			JButton newGame_Button = new JButton(startGamePic);
 			JButton options_Button = new JButton(optionsPic);
+			//gameFrame.add(gamePanel, BorderLayout.CENTER);
+			//gameFrame.add(gamePanel);
+			//add(gamePanel, BorderLayout.CENTER);
 			
 			
-			add(gamePanel, BorderLayout.CENTER);
-			
-			
-			//add(logo, BorderLayout.SOUTH);
+			gameFrame.add(logo, BorderLayout.CENTER);
 			JToolBar toolbar = new JToolBar();
 			toolbar.add(newGame_Button);
 			toolbar.add(options_Button);
-			add(toolbar, BorderLayout.NORTH);
+			gameFrame.add(toolbar, BorderLayout.NORTH);
+			gameFrame.setVisible(true);
 			/*toolbar.setFocusable(false);
 			toolbar.setEnabled(false);
 			
@@ -101,11 +108,12 @@ public class StartGame {
 			ActionListener startGameEvent = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					Sound.playSound("/Sounds/MLGAirHorn.wav");
-					Nickname nickname = new Nickname();
+					Nickname nickname = new Nickname(gameFrame, gamePanel, logo);
 					//nickname.setTitle("Nickname");
 					//nickname.setSize(300,140);
 					//nickname.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					//nickname.show();
+					
 					//add(gamePanel, BorderLayout.SOUTH);
 					//gamePanel.requestFocus();
 					
@@ -141,5 +149,7 @@ public class StartGame {
 			instructions.addActionListener(instructionsEvent);
 			aboutUs.addActionListener(aboutUsEvent);
 			exit.addActionListener(exitEvent);
+			
+			gameFrame.setSize(WindowHeight,WindowWidth);
 		}
 	}
