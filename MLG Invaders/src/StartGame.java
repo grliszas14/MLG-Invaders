@@ -102,10 +102,10 @@ public class StartGame {
 				public void actionPerformed(ActionEvent event) {
 					Sound.playSound("/Sounds/MLGAirHorn.wav");
 					Nickname nickname = new Nickname();
-					nickname.setTitle("Nickname");
-					nickname.setSize(300,140);
+					//nickname.setTitle("Nickname");
+					//nickname.setSize(300,140);
 					//nickname.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					nickname.show();
+					//nickname.show();
 					//add(gamePanel, BorderLayout.SOUTH);
 					//gamePanel.requestFocus();
 					
