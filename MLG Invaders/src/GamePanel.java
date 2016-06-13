@@ -143,10 +143,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			
 			
 			// kontrola zmiennych 
-			System.out.println(targetTime );
-			System.out.println(URDTimeMillis);
-			System.out.println(waitTime);
-			System.out.println(" \t\t\t ...");
+			//System.out.println(targetTime );
+			//System.out.println(URDTimeMillis);
+			//System.out.println(waitTime);
+			//System.out.println(" \t\t\t ...");
 			
 			try{
 				Thread.sleep(waitTime);
@@ -285,8 +285,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				//chance for powerup
 				double random = Math.random();
 				if(random < 0.001) powerups.add(new PowerUp(1, e.getx(), e.gety()));
+				else if(random < 0.01) powerups.add(new PowerUp(4, e.getx(), e.gety()));
 				else if(random < 0.02) powerups.add(new PowerUp(3, e.getx(), e.gety()));
 				else if(random < 0.12) powerups.add(new PowerUp(2, e.getx(), e.gety()));
+				
 				
 				getPlayer().addScore(e.getType() + e.getRank());
 				enemies.remove(i);
@@ -355,6 +357,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				}
 				if(type ==3){
 					getPlayer().increasePower(2);
+				}
+				if(type == 4){
+					getPlayer().addScore(50);
 				}
 				powerups.remove(i);
 				i--;
