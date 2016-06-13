@@ -45,6 +45,7 @@ public class StartGame {
 			//Config config = new Config() ;
 			ImageIcon startGamePic = new ImageIcon("src/Icons/startGamePic.png");
 			ImageIcon optionsPic = new ImageIcon("src/Icons/optionsPic.png");
+			ImageIcon highScoresPic = new ImageIcon("src/Icons/highScoresPic.png");
 			JMenuBar menuBar = new JMenuBar();
 			gameFrame.setJMenuBar(menuBar);
 			GamePanel gamePanel = new GamePanel(); //config
@@ -76,6 +77,7 @@ public class StartGame {
 			
 			JButton newGame_Button = new JButton(startGamePic);
 			JButton options_Button = new JButton(optionsPic);
+			JButton highScores_Button = new JButton(highScoresPic);
 			//gameFrame.add(gamePanel, BorderLayout.CENTER);
 			//gameFrame.add(gamePanel);
 			//add(gamePanel, BorderLayout.CENTER);
@@ -85,8 +87,10 @@ public class StartGame {
 			JToolBar toolbar = new JToolBar();
 			toolbar.add(newGame_Button);
 			toolbar.add(options_Button);
+			toolbar.add(highScores_Button);
 			gameFrame.add(toolbar, BorderLayout.NORTH);
 			gameFrame.setVisible(true);
+			gameFrame.pack();
 			/*toolbar.setFocusable(false);
 			toolbar.setEnabled(false);
 			
@@ -108,7 +112,8 @@ public class StartGame {
 			ActionListener startGameEvent = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					Sound.playSound("/Sounds/MLGAirHorn.wav");
-					Nickname nickname = new Nickname(gameFrame, gamePanel, logo);
+					Nickname nicknameWindow = new Nickname(gameFrame, gamePanel, logo);
+					// TU MOZNA SIE DOBRAC DO NICKNEJMU cos ala String export = nicknameWindow.nickname;
 					//nickname.setTitle("Nickname");
 					//nickname.setSize(300,140);
 					//nickname.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,6 +122,12 @@ public class StartGame {
 					//add(gamePanel, BorderLayout.SOUTH);
 					//gamePanel.requestFocus();
 					
+				}
+			};
+			
+			ActionListener highScoresEvent = new ActionListener() {
+				public void actionPerformed(ActionEvent event){
+					HighScores list = new HighScores();
 				}
 			};
 			
@@ -145,6 +156,7 @@ public class StartGame {
 			 * Setting events for buttons
 			 */
 			newGame_Button.addActionListener(startGameEvent);
+			highScores_Button.addActionListener(highScoresEvent);
 			newGame.addActionListener(startGameEvent);
 			instructions.addActionListener(instructionsEvent);
 			aboutUs.addActionListener(aboutUsEvent);
