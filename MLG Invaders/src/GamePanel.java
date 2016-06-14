@@ -92,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public void resume(){
 		suspended = false;
 		//running = true;
-		notifyAll();
+		notify();
 	}
 	/**
 	 * Load background
