@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,11 @@ import javax.swing.JTextField;
 public class Nickname {
 
 		private JFrame frame;
+		private String nickname;
+		public static int HEIGHT = 		Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
+		public static int WIDTH = 		Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
+		public static int HEIGHTPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
+		public static int WIDTHPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
 		
 	public Nickname(JFrame gameFrame, GamePanel gamePanel, Logo logo){
 		JPanel nickPanel = new JPanel();
@@ -44,9 +50,10 @@ public class Nickname {
 		
 		ActionListener okEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				String nickname = nick.getText();
+				nickname = nick.getText();
 				gameFrame.remove(logo);
 				gameFrame.add(gamePanel, BorderLayout.CENTER);
+				gameFrame.setSize(new Dimension(WIDTH + WIDTHPANEL, HEIGHT + 100));
 				frame.dispose();
 				gameFrame.revalidate();
 			}

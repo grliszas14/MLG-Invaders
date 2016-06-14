@@ -31,7 +31,7 @@ public class StartGame {
 }
 	
 	
-	class StartWindow {
+	class StartWindow implements ComponentListener {
 		
 		
 		private JFrame gameFrame;
@@ -42,6 +42,7 @@ public class StartGame {
 		public StartWindow() throws IOException {
 
 			gameFrame = new JFrame();
+			
 			//Config config = new Config() ;
 			ImageIcon startGamePic = new ImageIcon("src/Icons/startGamePic.png");
 			ImageIcon optionsPic = new ImageIcon("src/Icons/optionsPic.png");
@@ -162,6 +163,30 @@ public class StartGame {
 			aboutUs.addActionListener(aboutUsEvent);
 			exit.addActionListener(exitEvent);
 			
-			gameFrame.setSize(WindowHeight,WindowWidth);
+			gameFrame.setSize(WindowWidth,WindowHeight);
+			gameFrame.addComponentListener(this);
+		}
+		@Override
+		public void componentHidden(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void componentMoved(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		//@SuppressWarnings("deprecation")
+		@Override
+		public void componentResized(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			//Dimension size = gameFrame.getBounds().getSize();
+			//e.getComponent().resize(size);
+			
+		}
+		@Override
+		public void componentShown(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 	}

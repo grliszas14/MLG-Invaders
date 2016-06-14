@@ -105,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		suspended = false;
 		
 		
-		image = new BufferedImage(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH + WIDTHPANEL, HEIGHT , BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
