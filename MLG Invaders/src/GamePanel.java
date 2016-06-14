@@ -11,6 +11,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	private Thread thread;
 	private boolean running;
+	private boolean suspended;
 	
 	
 	public static int HEIGHT = 		Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
@@ -38,7 +39,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private long waveStartTimerDiff;
 	private int waveNumber;
 	private boolean waveStart;
-	private int waveDelay = 2000;	// pars
+	private int waveDelay = 2000;
+	// pars
 	
 	// tests 15.05.16
 	/**
@@ -82,7 +84,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 	}
 	
+	public void suspend(){
+		suspended = true;
+		//running = false;
+	}
 	
+	public void resume(){
+		suspended = false;
+		//running = true;
+		notifyAll();
+	}
 	/**
 	 * Load background
 	 * Create ArrayLists for enemies and bullets
@@ -91,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 */
 	public void run(){
 		running = true;
+		suspended = false;
 		
 		
 		image = new BufferedImage(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL, BufferedImage.TYPE_INT_RGB);
@@ -131,39 +143,45 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		/**
 		 * Game loop 
 		 */
-		while(running){
-			
-			startTime = System.nanoTime();
-			
-				gameUpdate();
-			
-			URDTimeMillis = (System.nanoTime() - startTime) / 1000000;
-			
-			waitTime = targetTime - URDTimeMillis;
-			
-			
-			// kontrola zmiennych 
-			//System.out.println(targetTime );
-			//System.out.println(URDTimeMillis);
-			//System.out.println(waitTime);
-			//System.out.println(" \t\t\t ...");
-			
-			try{
-				Thread.sleep(waitTime);
+
+			while(running){
+				
+				startTime = System.nanoTime();
+				
+					gameUpdate();
+				
+				URDTimeMillis = (System.nanoTime() - startTime) / 1000000;
+				
+				waitTime = targetTime - URDTimeMillis;
+				
+				
+				// kontrola zmiennych 
+				//System.out.println(targetTime );
+				//System.out.println(URDTimeMillis);
+				//System.out.println(waitTime);
+				//System.out.println(" \t\t\t ...");
+				
+				try{
+					Thread.sleep(waitTime);
+					synchronized(this){
+					while(suspended){
+						Thread.yield();
+					}
+					}
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				totalTime += System.nanoTime() - startTime;
+				frameCount++;
+				if(frameCount == maxFrameCount){
+					averageFPS = 1000.0 / ((totalTime / frameCount) / 1000000);
+					frameCount = 0;
+					totalTime = 0;
+				}
 			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
 			
-			totalTime += System.nanoTime() - startTime;
-			frameCount++;
-			if(frameCount == maxFrameCount){
-				averageFPS = 1000.0 / ((totalTime / frameCount) / 1000000);
-				frameCount = 0;
-				totalTime = 0;
-			}
-		}
-		
 		g.setColor(new Color(10,10,10));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.WHITE);
@@ -586,6 +604,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 		if(keyCode == KeyEvent.VK_SPACE){
 			getPlayer().setFiring(true);
+		}
+		if(keyCode == KeyEvent.VK_P){
+			if(suspended == false){
+				this.suspend();
+			}
+			else if( suspended == true){
+				this.resume();
+			}
 		}
 	}
 	/**
