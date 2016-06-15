@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.*;
+import java.util.Scanner;
+
 import javax.swing.*;
 
 public class StartGame {
@@ -10,6 +12,25 @@ public class StartGame {
 	 * Setting params of start window
 	 */
 	public static void main(String[] args) throws IOException {
+		
+		/*
+		 * Grzesiu to poni¿ej po prostu trzeba by wrypaæ w jakieœ okienko co wyskakuje, a jak nie ma czasu to niech bedzie z konsoli czy cos
+		 */
+		String ip, port;
+		Scanner skaner = new Scanner(System.in);
+	
+		System.out.print("Podaj ip serwera: ");
+		ip = skaner.nextLine();
+		System.out.print("podaj port: ");
+		port = skaner.nextLine();
+		
+		Client.connection("get_properties", ip, port);	// pobieram i zaczynam uzywac mlg.properties z serwera
+		
+		System.out.println("Status online: " + Config.getProperties().getProperty("server"));	// sprawdzam czy uzywane obecnie properties pochodzi z serwera
+		
+		
+		
+		
 		
 		StartWindow startWindow = new StartWindow();
 		//startWindow.setTitle("Space Invaders");

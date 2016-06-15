@@ -169,6 +169,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 					}
 					}
 				}
+				catch (IllegalArgumentException e){
+					// nothing
+				}
 				catch(Exception e){
 					e.printStackTrace();
 				}
@@ -192,6 +195,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		String wynik = "Twoj wynik: " + getPlayer().score;
 		int lengthwynik = (int) g.getFontMetrics().getStringBounds(wynik, g).getWidth();
 		g.drawString(wynik, (WIDTH - lengthwynik)/2, HEIGHT / 2 + 30);
+		Sound.playSound("/Sounds/IlluConfirmed.wav");
 		g2 = (Graphics2D) this.getGraphics(); // poprzednio: Graphics g2 = this.getGraphics();
 		g2.drawImage(image,0,0,null); // na ostatnim miejscu obiekt ktory ma byc powiadomiony, ze rysowanie sie udalo tzw ImageObserver
 		g2.dispose();
@@ -209,6 +213,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			waveNumber++;
 			waveStart = false;
 			waveStartTimer = System.nanoTime();
+			if (waveNumber == 1) { Sound.playSound("/Sounds/Intro.wav"); }
 		}
 		else {
 			waveStartTimerDiff = (System.nanoTime() - waveStartTimer) / 1000000;
@@ -343,6 +348,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				
 				if(dist < pr + er){
 					getPlayer().loseLife();
+					if(getPlayer().getLives()!=0) { Sound.playSound("/Sounds/Punch.wav"); }
 				}
 			}
 		}
@@ -398,6 +404,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				
 				if(dist < pr + r){
 					getPlayer().loseLife();
+					if(getPlayer().lives!=0) { Sound.playSound("/Sounds/WTFBoom_cut.wav"); }
 				}
 			}
 		}

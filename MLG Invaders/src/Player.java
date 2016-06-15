@@ -145,15 +145,18 @@ public class Player extends Engine{
 				
 				if(powerLevel < 2){
 					GamePanel.bullets.add(new Bullet(270,x,y));
+					if(lives!=0) { Sound.playSound("/Sounds/m4a1.wav"); }
 				}
 				else if(powerLevel < 4){
 					GamePanel.bullets.add(new Bullet(270,x+5,y));
 					GamePanel.bullets.add(new Bullet(270,x-5,y));
+					Sound.playSound("/Sounds/ump45.wav"); 
 				}
 				else{
 					GamePanel.bullets.add(new Bullet(275,x+5,y));
 					GamePanel.bullets.add(new Bullet(265,x-5,y));
 					GamePanel.bullets.add(new Bullet(270,x,y));
+					Sound.playSound("/Sounds/m249.wav"); 
 				}
 			}
 		}
