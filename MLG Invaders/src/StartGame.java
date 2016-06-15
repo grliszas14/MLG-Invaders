@@ -63,7 +63,7 @@ public class StartGame {
 		public StartWindow() throws IOException {
 
 			gameFrame = new JFrame();
-			
+			gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// Piotr programista
 			//Config config = new Config() ;
 			ImageIcon startGamePic = new ImageIcon("src/Icons/startGamePic.png");
 			ImageIcon optionsPic = new ImageIcon("src/Icons/optionsPic.png");
