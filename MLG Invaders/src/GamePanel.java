@@ -40,6 +40,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private int waveNumber;
 	private boolean waveStart;
 	private int waveDelay = 2000;
+	private double newHeight;
+	private double newWidth;
+	private double factorWidth;
+	private double factorHeight;
 	// pars
 	
 	// tests 15.05.16
@@ -105,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		suspended = false;
 		
 		
-		image = new BufferedImage(WIDTH + WIDTHPANEL, HEIGHT , BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(2000, 2000 , BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(
 				RenderingHints.KEY_ANTIALIASING,
@@ -113,6 +117,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		g.setRenderingHint(
 				RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 		background = new ImageIcon(Config.getProperties().getProperty(
 				"Background")).getImage();
 		
@@ -147,8 +153,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			while(running){
 				
 				startTime = System.nanoTime();
-				
-					gameUpdate();
+				newHeight = super.getHeight();
+				newWidth = super.getWidth() - WIDTHPANEL + 20;
+				factorWidth = newWidth/Integer.parseInt(Config.getProperties().getProperty("GameWidth"));
+				factorHeight = newHeight/Integer.parseInt(Config.getProperties().getProperty("GameHeight"));
+				gameUpdate();
 				
 				URDTimeMillis = (System.nanoTime() - startTime) / 1000000;
 				
@@ -186,15 +195,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			}
 			
 		g.setColor(new Color(10,10,10));
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.fillRect(0, 0, (int)(WIDTH*factorWidth), (int) (HEIGHT*factorHeight));
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 		String end = "G A M E  O V E R";
 		int lengthend = (int) g.getFontMetrics().getStringBounds(end, g).getWidth();
-		g.drawString(end, (WIDTH - lengthend) / 2, HEIGHT / 2 );
+		g.drawString(end, ((int)(WIDTH*factorWidth) - lengthend) / 2, (int) (HEIGHT*factorHeight) / 2 );
 		String wynik = "Twoj wynik: " + getPlayer().score;
 		int lengthwynik = (int) g.getFontMetrics().getStringBounds(wynik, g).getWidth();
-		g.drawString(wynik, (WIDTH - lengthwynik)/2, HEIGHT / 2 + 30);
+		g.drawString(wynik, ((int)(WIDTH*factorWidth) - lengthwynik)/2, (int) (HEIGHT*factorHeight) / 2 + 30);
 		Sound.playSound("/Sounds/IlluConfirmed.wav");
 		g2 = (Graphics2D) this.getGraphics(); // poprzednio: Graphics g2 = this.getGraphics();
 		g2.drawImage(image,0,0,null); // na ostatnim miejscu obiekt ktory ma byc powiadomiony, ze rysowanie sie udalo tzw ImageObserver
@@ -448,11 +457,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 			
 		g.setColor(Color.WHITE);
-		g.drawImage(background,0,0,null);
-		g.fillRect(WIDTH,0,WIDTHPANEL,HEIGHTPANEL);
+		g.drawImage(background,0,0,(int) (WIDTH*factorWidth), (int)(HEIGHT*factorHeight), null);
+		g.fillRect((int) (WIDTH*factorWidth),0,WIDTHPANEL,(int) (HEIGHTPANEL*factorHeight));
 		//g.setColor(Color.BLACK);
 		//g.drawString("FPS: " + averageFPS,440,300);
-		g.setColor(Color.BLUE);
 		
 		
 		String scor = "Wynik: ";
@@ -469,56 +477,56 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		int lengthvaluescor = (int) g.getFontMetrics().getStringBounds(valuescore, g).getWidth();
 		int lengthvaluehealth = (int) g.getFontMetrics().getStringBounds(valuehealth, g).getWidth();
 		
-		g.drawString(scor, WIDTH + (WIDTHPANEL - lengthscor)/ 2, HEIGHT / 12);
+		g.drawString(scor, (int) (WIDTH*factorWidth) + (WIDTHPANEL - lengthscor)/ 2, (int) (HEIGHT*factorHeight) / 12);
 		
-		g.drawString(power, WIDTH + (WIDTHPANEL - lengthpower)/ 2, 5 * HEIGHT / 12);
-		g.drawString(life, WIDTH + (WIDTHPANEL - lengthlife)/ 2, 9 *HEIGHT / 12);
+		g.drawString(power, (int) (WIDTH*factorWidth) + (WIDTHPANEL - lengthpower)/ 2, 5 * (int) (HEIGHT*factorHeight) / 12);
+		g.drawString(life, (int) (WIDTH*factorWidth) + (WIDTHPANEL - lengthlife)/ 2, 9 *(int) (HEIGHT*factorHeight) / 12);
 		//g.drawString("Score: " + getPlayer().score, 300, 530);
 		//g.drawString("Lives: " + getPlayer().lives, 300, 510);
-		g.drawString(valuescore, WIDTH + (WIDTHPANEL - lengthvaluescor)/ 2, 2 * HEIGHT /12);
+		g.drawString(valuescore, (int) (WIDTH*factorWidth) + (WIDTHPANEL - lengthvaluescor)/ 2, 2 * (int) (HEIGHT*factorHeight) /12);
 		g.setColor(Color.YELLOW);
-		g.fillRect(WIDTH + 55, 6 * HEIGHT / 12, getPlayer().getPower() * 16 , 16);
+		g.fillRect((int) (WIDTH*factorWidth) + 55, 6 * (int) (HEIGHT*factorHeight) / 12, getPlayer().getPower() * 16 , 16);
 		g.setColor(Color.YELLOW.darker());
 		g.setStroke(new BasicStroke(2));
 		for( int i = 0; i < getPlayer().getRequiredPower(); i++){
-		 g.drawRect(WIDTH + 55 + 16 * i, 6 * HEIGHT / 12, 16,16);
+		 g.drawRect((int) (WIDTH*factorWidth) + 55 + 16 * i, 6 * (int) (HEIGHT*factorHeight) / 12, 16,16);
 		}
 		for(int i = 0; i < player.getLives(); i++){
 			g.setColor(Color.WHITE);
-			g.fillOval(WIDTH + 70 + (20 * i), 10 * HEIGHT / 12, (int) 10 * 2, (int) 10 * 2);
+			g.fillOval((int) (WIDTH*factorWidth) + 70 + (20 * i), 10 * (int) (HEIGHT*factorHeight) / 12, (int) 10 * 2, (int) 10 * 2);
 			((Graphics2D) g).setStroke( new BasicStroke(3));
 			g.setColor(Color.WHITE.darker());
-			g.drawOval(WIDTH + 70 + (20 * i), 10 * HEIGHT / 12, (int) 10 * 2, (int) 10 * 2);
+			g.drawOval((int) (WIDTH*factorWidth) + 70 + (20 * i), 10 * (int) (HEIGHT*factorHeight) / 12, (int) 10 * 2, (int) 10 * 2);
 			((Graphics2D) g).setStroke( new BasicStroke(1));
 		}
 		
 		
 		//draw player
-		getPlayer().draw(g);
+		getPlayer().draw(g, factorWidth, factorHeight);
 		
 		//draw bullets
 		for( int i = 0; i < bullets.size(); i++){
-			bullets.get(i).draw(g);
+			bullets.get(i).draw(g, factorWidth, factorHeight);
 		}
 		
 		//draw enemies
 		for( int i = 0; i < enemies.size(); i++){
-			enemies.get(i).draw(g);
+			enemies.get(i).draw(g, factorWidth, factorHeight);
 		}
 		
 		//draw powerups
 		for( int i = 0; i < powerups.size(); i++){
-			powerups.get(i).draw(g);
+			powerups.get(i).draw(g, factorWidth, factorHeight);
 		}
 		
 		// draw bombs
 		for( int i = 0; i < bombs.size(); i++){
-			bombs.get(i).draw(g);
+			bombs.get(i).draw(g, factorWidth, factorHeight);
 		}
 		
 		// draw explosions
 		for( int i = 0; i < explosions.size(); i++){
-			explosions.get(i).draw(g);
+			explosions.get(i).draw(g, factorWidth, factorHeight);
 		}
 		
 		//draw wave number

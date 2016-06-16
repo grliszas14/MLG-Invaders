@@ -14,7 +14,7 @@ public class StartGame {
 	public static void main(String[] args) throws IOException {
 		
 		/*
-		 * Grzesiu to poni�ej po prostu trzeba by wrypa� w jakie� okienko co wyskakuje, a jak nie ma czasu to niech bedzie z konsoli czy cos
+		 * Grzesiu to poni¿ej po prostu trzeba by wrypaæ w jakieœ okienko co wyskakuje, a jak nie ma czasu to niech bedzie z konsoli czy cos
 		 */
 		String ip, port;
 		Scanner skaner = new Scanner(System.in);
@@ -88,7 +88,7 @@ public class StartGame {
 			 */
 			JMenuItem newGame = new JMenuItem("Nowa gra");
 			JMenuItem options = new JMenuItem("Opcje");
-			JMenuItem exit = new JMenuItem("Wyjœcie");
+			JMenuItem exit = new JMenuItem("WyjÅ“cie");
 			JMenuItem instructions = new JMenuItem("Instrukcja gry");
 			JMenuItem aboutUs = new JMenuItem("O nas");
 			file.add(newGame);
@@ -164,7 +164,7 @@ public class StartGame {
 			ActionListener instructionsEvent = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					JOptionPane.showMessageDialog(null,
-							"Szczegó³owe zasady gry: ", "Instructions", JOptionPane.INFORMATION_MESSAGE);
+							"SzczegÃ³Â³owe zasady gry: ", "Instructions", JOptionPane.INFORMATION_MESSAGE);
 				}
 			};
 			

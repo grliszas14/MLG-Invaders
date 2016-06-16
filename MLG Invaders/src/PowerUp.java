@@ -63,7 +63,7 @@ public class PowerUp extends Engine{
 	/**
 	 * rysuje power upa
 	 */
-	public void draw(Graphics2D g){
+	public void draw(Graphics2D g, double factorWidth, double factorHeight){
 		/*g.setColor(color1);
 		g.fillRect((int) x - r, (int) y - r, 2 * r, 2 * r);
 		g.setStroke(new BasicStroke(3));
@@ -71,9 +71,9 @@ public class PowerUp extends Engine{
 		g.drawRect((int) x - r, (int) y - r, 2 * r, 2 * r);
 		g.setStroke(new BasicStroke(1));
 		*/
-		if(type == 1) g.drawImage(bonusHP, (int) x - r, (int) y , null);
-		if(type == 2) g.drawImage(bonus1, (int) x - r , (int) y , null);
-		if(type == 3) g.drawImage(bonus2, (int) x - r, (int) y , null);
-		if(type == 4) g.drawImage(doritosBonus, (int) x - r, (int) y , null);
+		if(type == 1) g.drawImage(bonusHP, (int) ((x - r)*factorWidth) , (int) (y*factorHeight) , (int) (25*factorWidth), (int) (28*factorHeight), null);
+		if(type == 2) g.drawImage(bonus1, (int) ((x - r)*factorWidth) , (int) (y*factorHeight) , (int) (25*factorWidth), (int) (28*factorHeight), null);
+		if(type == 3) g.drawImage(bonus2, (int) ((x - r)*factorWidth) , (int) (y*factorHeight) , (int) (25*factorWidth), (int) (28*factorHeight), null);
+		if(type == 4) g.drawImage(doritosBonus, (int) ((x - r)*factorWidth) , (int) (y*factorHeight) , (int) (25*factorWidth), (int) (28*factorHeight), null);
 	}
 }

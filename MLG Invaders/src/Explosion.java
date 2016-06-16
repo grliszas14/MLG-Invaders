@@ -23,9 +23,9 @@ public class Explosion extends Engine{
 		return false;
 	}
 	
-	public void draw(Graphics2D g){
+	public void draw(Graphics2D g, double factorWidth, double factorHeight){
 		g.setColor(new Color(255,255,255,128));
 		g.setStroke(new BasicStroke(3));
-		g.drawOval((int) (x-r), (int) (y-r), 2 * r, 2 * r);
+		g.drawOval((int) ((x-r)*factorWidth), (int) ((y-r)*factorHeight), (int) (2 * r * factorWidth), (int) (2 * r * factorHeight));
 	}
 }

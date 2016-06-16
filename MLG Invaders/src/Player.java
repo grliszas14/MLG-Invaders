@@ -109,7 +109,7 @@ public class Player extends Engine{
 	public int getRequiredPower(){ return requiredPower[powerLevel]; }
 	
 	/**
-	*Metoda aktualizujaca po³o¿enie postaci
+	*Metoda aktualizujaca poÂ³oÂ¿enie postaci
 	*/
 	public boolean update() {
 		if(left){
@@ -173,24 +173,24 @@ public class Player extends Engine{
 	/**
 	*Metoda rysujaca postac gracza
 	*/
-	public void draw(Graphics2D g){
+	public void draw(Graphics2D g, double factorWidth, double factorHeight){
 		
 		if(recovering) {
 			g.setColor(color2);
-			g.fillOval(x - r,y - r, 2 * r, 2 * r);
+			g.fillOval((int) ((x - r)*factorWidth),(int) ((y - r)*factorHeight), (int) (2 * r * factorWidth), (int)(2 * r * factorHeight));
 			
 			g.setStroke(new BasicStroke(3));
 			g.setColor(color2.darker());
-			g.drawOval(x - r,y - r, 2 * r, 2 * r);
+			g.drawOval((int) ((x - r)*factorWidth),(int) ((y - r)*factorHeight),(int) ( 2 * r * factorWidth),(int) (2 * r * factorHeight));
 			g.setStroke(new BasicStroke(1));
 		}
 		else{
 			g.setColor(color1);
-			g.fillOval(x - r,y - r, 2 * r, 2 * r);
+			g.fillOval((int) ((x - r)*factorWidth),(int) ((y - r)*factorHeight),(int) ( 2 * r * factorWidth),(int) (2 * r * factorHeight));
 			
 			g.setStroke(new BasicStroke(3));
 			g.setColor(color1.darker());
-			g.drawOval(x - r,y - r, 2 * r, 2 * r);
+			g.drawOval((int) ((x - r)*factorWidth),(int) ((y - r)*factorHeight),(int) ( 2 * r * factorWidth),(int) (2 * r * factorHeight));
 			g.setStroke(new BasicStroke(1));
 		}
 		

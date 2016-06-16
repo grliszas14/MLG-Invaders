@@ -137,7 +137,7 @@ public class Enemy extends Engine{
 	/**
 	*Metoda rysujaca przeciwnika
 	*/
-	public void draw(Graphics2D g){
+	public void draw(Graphics2D g, double factorWidth, double factorHeight){
 		
 		//g.setColor(color1);
 		//g.fillOval((int) x - r, (int) y - r, 2 * r, 2 * r);
@@ -146,9 +146,9 @@ public class Enemy extends Engine{
 		//g.setColor(color1.darker());
 		//g.drawOval((int) x - r,(int) y - r, 2 * r, 2 * r);
 		//g.setStroke(new BasicStroke(1));
-		if(type == 1) g.drawImage(illuminatiEnemy1, (int) x - r, (int) y, null);
-		if(type == 2) g.drawImage(illuminatiEnemy2, (int) x - r, (int) y, null);
-		if(type == 3) g.drawImage(illuminatiEnemy3, (int) x - r, (int) y, null);
+		if(type == 1) g.drawImage(illuminatiEnemy1, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
+		if(type == 2) g.drawImage(illuminatiEnemy2, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
+		if(type == 3) g.drawImage(illuminatiEnemy3, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
 	}
 	
 }

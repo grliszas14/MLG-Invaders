@@ -47,14 +47,14 @@ public class Bomb extends Engine{
 	/**
 	 * rysuje bombe 
 	 */
-	public void draw(Graphics2D g){
+	public void draw(Graphics2D g, double factorWidth, double factorHeight){
 		//g.setColor(color1);
 		//g.fillOval((int) x - r, (int) y - r + 50, 2 * r, 2 * r);
 		//g.setStroke(new BasicStroke(3));
 		//g.setColor(color2);
 		//g.drawOval((int) x - r, (int) y - r + 50, 2 * r, 2 * r);
 		//g.setStroke(new BasicStroke(1));
-		g.drawImage(bombka, (int) x - r, (int) y, null);
+		g.drawImage(bombka, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) ( 25*factorWidth), (int) (19*factorHeight), null);
 	}
 	
 }

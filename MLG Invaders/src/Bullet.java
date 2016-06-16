@@ -11,6 +11,7 @@ public class Bullet extends Engine{
 	private double rad;
 	private double speed;
 	
+	
 	private Color color1;
 	
 	/*
@@ -46,25 +47,24 @@ public class Bullet extends Engine{
 	public double getr() { return r;}
 	
 	/*
-	*Metoda aktualizujaca polo¿enie pocisku
+	*Metoda aktualizujaca poloÂ¿enie pocisku
 	*/
 	public boolean update(){
 		x += dx;
 		y += dy;
 		
-		if(x < -r || x > GamePanel.WIDTH + r ||
-				y <-r || y > GamePanel.HEIGHT + r){
+		if(x < -r || x > (GamePanel.WIDTH + r) ||
+				y <-r || y > GamePanel.HEIGHT + r) {
 			return true;
 		}
 		return false;
 	}
 	
 	/*
-	* Metoda rysuj¹ca pocisk
+	* Metoda rysujÂ¹ca pocisk
 	*/
-	public void draw(Graphics2D g){
-		
+	public void draw(Graphics2D g, double factorWidth, double factorHeight){
 		g.setColor(color1);
-		g.fillOval((int) (x-r),(int) (y - r) , 2 * r, 2 * r);
+		g.fillOval( (int) ((x-r)*factorWidth),(int) ((y - r)*factorHeight) , (int) (2 * r*factorWidth), (int) (2 * r*factorHeight)) ;
 	}
 }
