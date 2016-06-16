@@ -537,7 +537,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			int alpha = (int) (255 * Math.sin(3.14 * waveStartTimerDiff  / waveDelay));
 			if(alpha > 255) alpha = 255;
 			g.setColor(new Color(0,0,0, alpha));
-			g.drawString(s, (WIDTH - length) / 2 , 3 * HEIGHT / 8);
+			g.drawString(s, ((int) (WIDTH*factorWidth) - length) / 2 , 3 * (int) (HEIGHT*factorHeight) / 8);
 		}
 		
 		
