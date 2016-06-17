@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
 	
-	private Thread thread;
+	private Thread 	thread;
 	private boolean running;
 	private boolean suspended;
 	
@@ -20,18 +20,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public static int WIDTHPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
 	
 	private BufferedImage image;
-	private Graphics2D g;
-	private Graphics2D g2;
-	private int FPS = Integer.parseInt(Config.getProperties().getProperty("FPS"));
+	private Graphics2D 	g;
+	private Graphics2D 	g2;
+	private int FPS = 				Integer.parseInt(Config.getProperties().getProperty("FPS"));
 	private double averageFPS;
-	private int numberOfEnemies = Integer.parseInt(Config.getProperties().getProperty("numberOfEnemies"));
+	private int numberOfEnemies = 	Integer.parseInt(Config.getProperties().getProperty("numberOfEnemies"));
 	
 	private static Player player;
-	public static ArrayList<Bullet> bullets;
-	public static ArrayList<Enemy> enemies;
-	public static ArrayList<PowerUp> powerups;
-	public static ArrayList<Bomb> bombs;
-	public static ArrayList<Explosion> explosions;
+	public static ArrayList<Bullet> 	bullets;
+	public static ArrayList<Enemy> 		enemies;
+	public static ArrayList<PowerUp> 	powerups;
+	public static ArrayList<Bomb> 		bombs;
+	public static ArrayList<Explosion> 	explosions;
 	private Image background;
 	
 	
@@ -80,22 +80,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			thread.start();
 			addKeyListener(this);
 		}
-		/// tests 15.05.16
-		// setPreferredSize(new Dimension(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL));
-		//offscr = createImage(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL);
-		//offscrgr = offscr.getGraphics();
-	
 		
 	}
 	
 	public void suspend(){
 		suspended = true;
-		//running = false;
 	}
 	
 	public void resume(){
 		suspended = false;
-		//running = true;
 		notify();
 	}
 	/**
@@ -117,8 +110,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		g.setRenderingHint(
 				RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g.setRenderingHint(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+		g.setRenderingHint(
+				RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g.setRenderingHint(
+				RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
 		background = new ImageIcon(Config.getProperties().getProperty(
 				"Background")).getImage();
 		
@@ -145,7 +142,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 		int frameCount = 0;
 		int maxFrameCount = Integer.parseInt(Config.getProperties().getProperty("maxFrameCount"));
-		
+
 		/**
 		 * Game loop 
 		 */
@@ -163,12 +160,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				
 				waitTime = targetTime - URDTimeMillis;
 				
-				
-				// kontrola zmiennych 
-				//System.out.println(targetTime );
-				//System.out.println(URDTimeMillis);
-				//System.out.println(waitTime);
-				//System.out.println(" \t\t\t ...");
 				
 				try{
 					Thread.sleep(waitTime);
@@ -561,7 +552,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		enemies.clear();
 		Enemy e;
 		
-		if(waveNumber == 1) {
+		/*if(waveNumber == 1) {
 			for(int i = 0; i < 4; i++){
 				enemies.add(new Enemy(1,1));
 			}
@@ -588,6 +579,26 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			}
 			for(int i = 0; i < 4; i++){
 				enemies.add(new Enemy(3,1));
+			}
+		}
+		*/
+		for(int i = 0; i < waveNumber; i++){
+			
+			if(waveNumber == 1 || waveNumber == 2){
+				enemies.add(new Enemy(1,1));
+				enemies.add(new Enemy(1,1));
+			}
+			if(waveNumber > 2 && waveNumber < 6) {
+				enemies.add(new Enemy(1,1));
+				enemies.add(new Enemy(2,1));
+			}
+			if(waveNumber > 6 && waveNumber < 10){
+				enemies.add(new Enemy(1,1));
+				enemies.add(new Enemy(2,1));
+				enemies.add(new Enemy(3,1));
+			}
+			if(waveNumber == 10){
+				enemies.add(new Enemy(4,1));
 			}
 		}
 	}

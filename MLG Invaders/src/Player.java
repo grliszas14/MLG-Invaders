@@ -97,10 +97,12 @@ public class Player extends Engine{
 	 * zwieksza moc ataku
 	 */
 	public void increasePower(int i){
-		power += i;
-		if(power >= requiredPower[powerLevel]){
-			power -= requiredPower[powerLevel];
-			powerLevel++;
+		if(powerLevel < 4){
+			power += i;
+			if(power >= requiredPower[powerLevel]){
+				power -= requiredPower[powerLevel];
+				powerLevel++;
+			}
 		}
 	}
 	

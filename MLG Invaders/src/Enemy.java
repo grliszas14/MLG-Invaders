@@ -24,6 +24,7 @@ public class Enemy extends Engine{
 	private Image illuminatiEnemy1;
 	private Image illuminatiEnemy2;
 	private Image illuminatiEnemy3;
+	private Image illuminatiEnemy4;
 	
 	/**
 	* Konstruktor przeciwnika. 
@@ -34,6 +35,7 @@ public class Enemy extends Engine{
 		illuminatiEnemy1 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy1")).getImage();
 		illuminatiEnemy2 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy2")).getImage();
 		illuminatiEnemy3 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy3")).getImage();
+		illuminatiEnemy4 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy4")).getImage();
 		this.type = type;
 		this.rank = rank;
 		
@@ -68,7 +70,13 @@ public class Enemy extends Engine{
 				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth3"));
 			}
 		} 
-		
+		if(type == 4) {
+			if(rank == 1){
+				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed4"));
+				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius4"));
+				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth4"));
+			}
+		}
 		x = Math.random() * GamePanel.WIDTH / 2 + GamePanel.WIDTH / 4;
 		y = -r + 15;
 		
@@ -131,7 +139,7 @@ public class Enemy extends Engine{
 		if(y < r && dy < 0) dy = -dy;
 		if(x > GamePanel.WIDTH - r && dx > 0){
 			dx = -dx;
-			y +=50;
+			y += 50;
 		}
 		if(y > GamePanel.HEIGHT - r && dy > 0) dy = -dy;
 		return true;
@@ -152,6 +160,7 @@ public class Enemy extends Engine{
 		if(type == 1) g.drawImage(illuminatiEnemy1, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
 		if(type == 2) g.drawImage(illuminatiEnemy2, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
 		if(type == 3) g.drawImage(illuminatiEnemy3, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
+		if(type == 4) g.drawImage(illuminatiEnemy4, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (200*factorWidth), (int) (200*factorHeight), null);
 	}
 	
 }
