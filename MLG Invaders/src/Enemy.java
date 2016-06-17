@@ -129,7 +129,10 @@ public class Enemy extends Engine{
 		}
 		if(x < r && dx < 0) dx = -dx;
 		if(y < r && dy < 0) dy = -dy;
-		if(x > GamePanel.WIDTH - r && dx > 0) dx = -dx;
+		if(x > GamePanel.WIDTH - r && dx > 0){
+			dx = -dx;
+			y +=50;
+		}
 		if(y > GamePanel.HEIGHT - r && dy > 0) dy = -dy;
 		return true;
 	}
