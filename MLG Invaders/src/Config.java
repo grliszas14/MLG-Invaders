@@ -3,14 +3,16 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.StringReader;
 import java.util.Properties;
-
+/**
+ * Class to configure parameters of the game
+ *
+ */
 public final class Config {
-
+	/**
+	 * Variable storing properties file
+	 */
 	private static Properties properties ;
 	
-	/**
-	 * Podanie zrodla pliku konfiguracyjnego
-	 */
 	static {
 		try {
 			setProperties(get("src/mlg.properties"));
@@ -20,7 +22,7 @@ public final class Config {
 	}
 	
 	/**
-	 * Pobieranie danych z pliku 
+	 * Method downloading data from properties file
 	 */
 	private static Properties get(String file) throws IOException {
 		Properties properties = new Properties();
@@ -36,10 +38,16 @@ public final class Config {
 		return properties;
 	}
 
+	/**
+	 * properties getter
+	 * @return properties
+	 */
 	public static Properties getProperties() {
 		return properties;
 	}
-
+	/*
+	 * properties setter
+	 */
 	private static void setProperties(Properties properties) {
 		Config.properties = properties;
 	}
