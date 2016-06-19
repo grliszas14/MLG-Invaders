@@ -2,14 +2,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.*;
-
+/**
+ * Class displaying logo of the game
+ * @author Grzegorz Wojciechowski, Jakub Szajner
+ *
+ */
 public class Logo extends JPanel {
-
+	/**
+	 * Height of the logo
+	 */
 	public static int LOGOHEIGHT = 480;
+	/**
+	 * Width of the logo
+	 */
 	public static int LOGOWIDTH = 360;
 	
 	/**
-	 * tworzy JPanel i pokazuje na nim ikone 
+	 * Makes panel and shows logo in it
 	 */
 	public Logo(){
 		super();
@@ -18,7 +27,7 @@ public class Logo extends JPanel {
 	//	setFocusable(true);
 	}
 	/**
-	 * pokazuje ikone PNG 
+	 * Method showing logo 
 	 */
 	public void showPNG(){
 		ImageIcon icon = new ImageIcon("src/Icons/majn.png");
