@@ -12,6 +12,18 @@ import javax.swing.JPanel;
 public class HighScores {
 	
 	private JFrame frame;
+	private String nick1;
+	private String nick2;
+	private String nick3;
+	private String nick4;
+	private String nick5;
+	
+	private int result1;
+	private int result2;
+	private int result3;
+	private int result4;
+	private int result5;
+	
 	private String place1;
 	private String place2;
 	private String place3;
@@ -21,11 +33,11 @@ public class HighScores {
 	
 	public HighScores(){
 		
-		place1 = ("S³awek 562");
-		place2 = ("Kulpan 480");
-		place3 = ("Czarek 70");
-		place4 = ("Matylda 2");
-		place5 = ("Glinek -80");
+		place1 = (nick1 + " " + result1);
+		place2 = (nick2 + " " + result2);
+		place3 = (nick3 + " " + result3);
+		place4 = (nick4 + " " + result4);
+		place5 = (nick5 + " " + result5);
 		frame = new JFrame();
 		frame.setSize(300, 400);
 		frame.setTitle("High Scores");
