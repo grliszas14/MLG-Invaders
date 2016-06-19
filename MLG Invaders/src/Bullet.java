@@ -1,21 +1,45 @@
 import java.awt.*;
 
 public class Bullet extends Engine{
-	
+	/**
+	 * Coordinate x
+	 */
 	private double x;
+	/**
+	 * Coordinate y
+	 */
 	private double y;
+	/**
+	 * Radius of bullet
+	 */
 	private int r;
 	
+	/**
+	 * Shift in x axis
+	 */
 	private double dx;
+	/**
+	 * Shift in y axis
+	 */
 	private double dy;
+	/**
+	 * Angle of bullet
+	 */
 	private double rad;
+	/**
+	 * Speed of bullet
+	 */
 	private double speed;
-	
-	
+	/**
+	 * Color of bullet
+	 */
 	private Color color1;
 	
 	/*
-	* Konstruktor pocisku, ustawia polozenie, kolor, wymiary i predkosc
+	* Constructor of bullet class, setting position, color, size and speed of bullet
+	* @param angle
+	* @param x
+	* @param y 
 	*/
 	public Bullet(double angle, int x, int y){
 		this.x = x;
@@ -33,21 +57,21 @@ public class Bullet extends Engine{
 	
 	
 	/*
-	* Metoda zwracajaca wspolrzedna x
+	* x getter
 	*/
 	public double getx() { return x;}
 	
 	/*
-	*Metoda zwracajaca wspolrzedna y
+	* y getter
 	*/
 	public double gety() { return y;}
 	/*
-	*Metoda zwracajaca promien pocisku
+	* radius getter
 	*/
 	public double getr() { return r;}
 	
 	/*
-	*Metoda aktualizujaca polo¿enie pocisku
+	* Updating position of a bullet
 	*/
 	public boolean update(){
 		x += dx;
@@ -61,7 +85,7 @@ public class Bullet extends Engine{
 	}
 	
 	/*
-	* Metoda rysuj¹ca pocisk
+	* Method drawing a bullet
 	*/
 	public void draw(Graphics2D g, double factorWidth, double factorHeight){
 		g.setColor(color1);
