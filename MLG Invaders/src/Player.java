@@ -1,40 +1,99 @@
 import java.awt.*;
 /**
-*Klasa opisujaca postac gry, aktualizuje polozenie
+* Class describing player
 */
 public class Player extends Engine{
-	
+	/**
+	 * Coordinate x
+	 */
 	private int x;
+	/**
+	 * Coordinate y
+	 */
 	private int y;
+	/**
+	 * Radius of player
+	 */
 	private int r;
-	
+	/**
+	 * Shift x axis
+	 */
 	private int dx;
+	/**
+	 * Shift y axis
+	 */
 	private int dy;
+	/**
+	 * Speed of player
+	 */
 	private int speed;
-	
+	/**
+	 * Variable to tell if player is going left
+	 */
 	private boolean left;
+	/**
+	 * Variable to tell if player is going right
+	 */
 	private boolean right;
+	/**
+	 * Variable to tell if player is going up
+	 */
 	private boolean up;
+	/**
+	 * Variable to tell if player is going down
+	 */
 	private boolean down;
-	
+	/**
+	 * Variable to tell if player is firing
+	 */
 	private boolean firing;
+	/**
+	 * Variable needed to shooting mechanism
+	 */
 	private long firingTimer;
+	/**
+	 * Variable needed to shooting mechanism
+	 */
 	private long firingDelay;
-	
+	/**
+	 * Variable to tell if player is recovering
+	 */
 	private boolean recovering;
+	/**
+	 * Timer of recovery state
+	 */
 	private long recoveryTimer;
-	
+	/**
+	 * Amount of player lives
+	 */
 	public int lives;
+	/**
+	 * Player score
+	 */
 	public int score;
+	/**
+	 * First color to draw player
+	 */
 	private Color color1;
+	/**
+	 * Second color do draw player
+	 */
 	private Color color2;
-	
+	/**
+	 * Level of shooting power
+	 */
 	private int powerLevel;
+	/**
+	 * Variable needed to shooting power mechanism
+	 */
 	private int power;
+	/**
+	 * Table needed to shooting power mechanism
+	 */
 	private int[] requiredPower = { 1, 2, 3, 4, 5 };
 	
 	/**
-	 * Konstruktor playera
+	 * Constructor of player, setting position and other parameters
 	 */
 	public Player(){
 		
@@ -49,36 +108,81 @@ public class Player extends Engine{
 		firing = false;
 		firingTimer = System.nanoTime();
 		firingDelay = Integer.parseInt(Config.getProperties().getProperty("firingDelay"));
-		
-				
+			
 		recovering = false;
 		recoveryTimer = 0;
 		
 		score = 0;
 	}
-	
+	/**
+	 * lives getter
+	 * @return lives
+	 */
 	public int getLives() { return lives; }
+	/**
+	 * score getter
+	 * @return score
+	 */
 	public int getScore() { return score; }	
+	/**
+	 * method telling if player is dead or not
+	 * @return
+	 */
 	public boolean isDead() { return lives <=0; }
 	
-
+	/**
+	 * method telling if player is recovering
+	 * @return recovering
+	 */
 	public boolean isRecovering() { return recovering; }
-	
+	/**
+	 * Method setting player move left
+	 * @param b
+	 */
 	public void setLeft(boolean b){ left = b; }
+	/**
+	 * Method setting player move right
+	 * @param b
+	 */
 	public void setRight(boolean b){ right = b; }
+	/**
+	 * Method setting player move up
+	 * @param b
+	 */
 	public void setUp(boolean b){ up = b; }
+	/**
+	 * Method setting player move down
+	 * @param b
+	 */
 	public void setDown(boolean b){ down = b; }
-	
+	/**
+	 * Method setting player firing
+	 * @param b
+	 */
 	public void setFiring(boolean b) { firing = b; }
-	
+	/**
+	 * Method adding player score
+	 * @param i
+	 */
 	public void addScore(int i) { score += i; }
-	
+	/**
+	 * get player x
+	 * @return x
+	 */
 	public int getix() { return x;}
+	/**
+	 * get player y
+	 * @return y
+	 */
 	public int getiy() { return y;}
+	/**
+	 * get player r
+	 * @return r 
+	 */
 	public int getir() { return r;}
 	
 	/**
-	 * Zmniejsza liczbe zyc o jeden
+	 * Method to remove 1 life
 	 */
 	public void loseLife() {
 		lives--;
@@ -87,14 +191,14 @@ public class Player extends Engine{
 	}
 	
 	/**
-	 * zwieksza liczbe zyc o jeden
+	 * Add 1 life
 	 */
 	public void gainLife() {
 		lives++;
 	}
 	
 	/**
-	 * zwieksza moc ataku
+	 * Add power of firing
 	 */
 	public void increasePower(int i){
 		if(powerLevel < 4){
@@ -105,13 +209,24 @@ public class Player extends Engine{
 			}
 		}
 	}
-	
+	/**
+	 * powerLevel getter
+	 * @return powerLevel
+	 */
 	public int getPowerLevel(){return powerLevel; }
+	/**
+	 * power getter
+	 * @return power
+	 */
 	public int getPower(){ return power; }
+	/**
+	 * requiredPower getter
+	 * @return requiredPower
+	 */
 	public int getRequiredPower(){ return requiredPower[powerLevel]; }
 	
 	/**
-	*Metoda aktualizujaca po³o¿enie postaci
+	* Update player position
 	*/
 	public boolean update() {
 		if(left){
@@ -162,8 +277,7 @@ public class Player extends Engine{
 				}
 			}
 		}
-		
-		// 2 sekundy niesmiertelnosci po stracie jedenego zycia 
+
 		long elapsed = (System.nanoTime() - recoveryTimer) / 1000000;
 		if(elapsed > 2000) {
 			recovering = false;
@@ -173,7 +287,7 @@ public class Player extends Engine{
 	}
 	
 	/**
-	*Metoda rysujaca postac gracza
+	* Method to draw player
 	*/
 	public void draw(Graphics2D g, double factorWidth, double factorHeight){
 		
