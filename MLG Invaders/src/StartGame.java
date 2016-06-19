@@ -5,78 +5,71 @@ import java.io.*;
 import java.util.Scanner;
 
 import javax.swing.*;
-
+/**
+ * Main class of whole game
+ * @author Grzegorz Wojciechowski, Jakub Szajner
+ *
+ */
 public class StartGame {
 	
 	/**
-	 * Setting params of start window
+	 * Main function of game
 	 */
 	public static void main(String[] args) throws IOException {
-		
-		/*
-		 * Grzesiu to poni¿ej po prostu trzeba by wrypaæ w jakieœ okienko co wyskakuje, a jak nie ma czasu to niech bedzie z konsoli czy cos
+		/**
+		 * Variables storing ip address and port number
 		 */
 		String ip, port;
+		/**
+		 * Scanner to load input from user
+		 */
 		Scanner skaner = new Scanner(System.in);
 	
 		System.out.print("Podaj ip serwera: ");
 		ip = skaner.nextLine();
 		System.out.print("podaj port: ");
 		port = skaner.nextLine();
+		Client.connection("get_properties", ip, port);
+		System.out.println("Status online: " + Config.getProperties().getProperty("server"));
 		
-		Client.connection("get_properties", ip, port);	// pobieram i zaczynam uzywac mlg.properties z serwera
-		
-		System.out.println("Status online: " + Config.getProperties().getProperty("server"));	// sprawdzam czy uzywane obecnie properties pochodzi z serwera
-		
-		
-		
-		
-		
-		StartWindow startWindow = new StartWindow();
-		//startWindow.setTitle("Space Invaders");
-		
-		//int WindowHeight	= Integer.parseInt(Config.getProperties().getProperty("WindowHeight"));
-		//int WindowWidth		= Integer.parseInt(Config.getProperties().getProperty("WindowWidth"));
-		//startWindow.setSize(WindowWidth,WindowHeight);	
-										
-		//startWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//startWindow.show();
-		
-		
-		
-		// test wczytywania konfigu 
-		
-		//String test = Confgi.getProperties().getProperty("mlg.WindowHeight");
-		//System.out.println(test);					
+		StartWindow startWindow = new StartWindow();				
 	}
 }
 	
-	
-	class StartWindow implements ComponentListener {
+	/**
+	 * Class in which GUI is laid
+	 */
+	class StartWindow{
 		
-		
+		/**
+		 * Frame of the game
+		 */
 		private JFrame gameFrame;
+		/**
+		 * Height of the game frame
+		 */
 		int WindowHeight	= Integer.parseInt(Config.getProperties().getProperty("WindowHeight"));
+		/**
+		 * Width of the game frame
+		 */
 		int WindowWidth		= Integer.parseInt(Config.getProperties().getProperty("WindowWidth"));
-		//public Config config ;
-		//public int a =5;
+
+		/**
+		 * Constructor of a class
+		 * Here whole GUI is built
+		 * Frames, buttons, actionListeners
+		 */
 		public StartWindow() throws IOException {
 
 			gameFrame = new JFrame();
-			gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	// Piotr programista
-			//Config config = new Config() ;
+			gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			ImageIcon startGamePic = new ImageIcon("src/Icons/startGamePic.png");
 			ImageIcon optionsPic = new ImageIcon("src/Icons/optionsPic.png");
 			ImageIcon highScoresPic = new ImageIcon("src/Icons/highScoresPic.png");
 			JMenuBar menuBar = new JMenuBar();
 			gameFrame.setJMenuBar(menuBar);
 			Logo logo = new Logo();
-			
-			
-			//JToolBar sideBar = new JToolBar();
-			//sideBar.setOrientation(VERTICAL);
-			
-			
+
 			JMenu file = new JMenu("Plik");
 			JMenu help = new JMenu("Pomoc");
 			menuBar.add(file);
@@ -99,11 +92,7 @@ public class StartGame {
 			JButton newGame_Button = new JButton(startGamePic);
 			JButton options_Button = new JButton(optionsPic);
 			JButton highScores_Button = new JButton(highScoresPic);
-			//gameFrame.add(gamePanel, BorderLayout.CENTER);
-			//gameFrame.add(gamePanel);
-			//add(gamePanel, BorderLayout.CENTER);
-			
-			
+		
 			gameFrame.add(logo, BorderLayout.CENTER);
 			JToolBar toolbar = new JToolBar();
 			toolbar.add(newGame_Button);
@@ -112,21 +101,7 @@ public class StartGame {
 			gameFrame.add(toolbar, BorderLayout.NORTH);
 			gameFrame.setVisible(true);
 			gameFrame.pack();
-			/*toolbar.setFocusable(false);
-			toolbar.setEnabled(false);
-			
-			gamePanel.set
-			
-			gamePanel.setFocusable(true);
-			gamePanel.setEnabled(true);
-			System.out.println("toolbar fokjusejbyl: " + toolbar.isFocusable());
-			System.out.println("GamePnale fokjusejbyl: " + gamePanel.isFocusable());
-			/*gamePanel.setFocusable(true);
-			gamePanel.requestFocus();
-			gamePanel.requestDefaultFocus();
-			*/
-			
-			
+				
 			/**
 			 * Methods to make buttons work
 			 */
@@ -134,16 +109,7 @@ public class StartGame {
 				public void actionPerformed(ActionEvent event) {
 					Sound.playSound("/Sounds/MLGAirHorn.wav");
 					GamePanel gamePanel = new GamePanel();
-					Nickname nicknameWindow = new Nickname(gameFrame, gamePanel, logo);
-					// TU MOZNA SIE DOBRAC DO NICKNEJMU cos ala String export = nicknameWindow.nickname;
-					//nickname.setTitle("Nickname");
-					//nickname.setSize(300,140);
-					//nickname.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					//nickname.show();
-					
-					//add(gamePanel, BorderLayout.SOUTH);
-					//gamePanel.requestFocus();
-					
+					Nickname nicknameWindow = new Nickname(gameFrame, gamePanel, logo);			
 				}
 			};
 			
@@ -185,29 +151,6 @@ public class StartGame {
 			exit.addActionListener(exitEvent);
 			
 			gameFrame.setSize(WindowWidth,WindowHeight);
-			gameFrame.addComponentListener(this);
 		}
-		@Override
-		public void componentHidden(ComponentEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void componentMoved(ComponentEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		//@SuppressWarnings("deprecation")
-		@Override
-		public void componentResized(ComponentEvent e) {
-			// TODO Auto-generated method stub
-			//Dimension size = gameFrame.getBounds().getSize();
-			//e.getComponent().resize(size);
-			
-		}
-		@Override
-		public void componentShown(ComponentEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
+		
 	}
