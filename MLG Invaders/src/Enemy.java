@@ -1,24 +1,53 @@
 import java.awt.*;
 
 import javax.swing.ImageIcon;
-
+/**
+ * Class creating and drawing Enemies
+ */
 public class Enemy extends Engine{
-	
+	/**
+	 * Coordinate x
+	 */
 	private double x;
+	/**
+	 * Coordinate y
+	 */
 	private double y;
+	/**
+	 * Radius of enemy
+	 */
 	private int r;
-	
+	/**
+	 * Shift x axis
+	 */
 	private double dx;
+	/**
+	 * Shift y axis
+	 */
 	private double dy;
+	/**
+	 * Angle for enemy to go
+	 */
 	private double rad;
+	/**
+	 * Speed of enemy
+	 */
 	private double speed;
-	
+	/**
+	 * Health of enemy
+	 */
 	private int health;
+	/**
+	 * Rank of enemy multiply score
+	 */
 	private int rank;
+	/**
+	 * Type of enemy
+	 */
 	private int type;
-	
-	private Color color1;
-	
+	/**
+	 * 
+	 */
 	private boolean ready;
 	private boolean dead;
 	private Image illuminatiEnemy1;
@@ -27,9 +56,8 @@ public class Enemy extends Engine{
 	private Image illuminatiEnemy4;
 	
 	/**
-	* Konstruktor przeciwnika. 
-	* Wczytuje obrazki, ustawia predkosc, promien i zycie
-	* Przeciwnicy o roznych trudnosciach
+	* Constructor of enemy class
+	* Draws different enemies, sets speed and health
 	*/
 	public Enemy( int type, int rank){
 		illuminatiEnemy1 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy1")).getImage();
@@ -38,23 +66,16 @@ public class Enemy extends Engine{
 		illuminatiEnemy4 = new ImageIcon(Config.getProperties().getProperty("IlluminatiEnemy4")).getImage();
 		this.type = type;
 		this.rank = rank;
-		
+		//basic enemy
 		if(type == 1) {
-			color1 = Color.RED;
 			if(rank == 1){
 				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed"));
 				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius"));
-				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth"));
-								
-				// metoda: GetProperties.getProperties().getProperty("EnemySpeed") 
-				// w "..." podajesz klucz, zwraca wartoœæ jako String. Nasz plik jest jak s³ownik, tzn klucz=wartosc
-				// Integer.parseInt zamienia Stringa na inta
-				
+				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth"));		
 			}
 		}
 		//faster, stronger enemy
 		if(type == 2) {
-			color1 = Color.BLUE;
 			if(rank == 1){
 				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed2"));
 				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius"));
@@ -63,13 +84,13 @@ public class Enemy extends Engine{
 		} 
 		//slow but hard to kill enemy
 		if(type == 3) {
-			color1 = Color.GREEN;
 			if(rank == 1){
 				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed3"));
 				r = Integer.parseInt(Config.getProperties().getProperty("EnemyRadius"));
 				health = Integer.parseInt(Config.getProperties().getProperty("EnemyHealth3"));
 			}
 		} 
+		//the boss
 		if(type == 4) {
 			if(rank == 1){
 				speed = (double)Integer.parseInt(Config.getProperties().getProperty("EnemySpeed4"));
@@ -91,28 +112,38 @@ public class Enemy extends Engine{
 	}
 	
 	/**
-	*Metoda zwracajaca wspolrzedna x
+	* x getter
+	* @return x
 	*/
 	public double getx() { return x;}
 	/**
-	*Metoda zwracajaca wspolrzedna y
+	* y getter
+	* @return y
 	*/
 	public double gety() { return y;}
 	/**
-	*Metoda zwracajaca promien wroga
+	* radius getter
+	* @return r
 	*/
 	public double getr() { return r;}
 	
-		/**
-		*Metoda zwracajaca czy obiekt zostal zabity
-		*/
+	/**
+	* dead getter
+	* @return dead
+	*/
 	public boolean isDead() { return dead; }
-	
+	/**
+	 * type getter
+	 * @return type
+	 */
 	public int getType() { return type; }
-	
+	/**
+	 * rank getter
+	 * @return rank
+	 */
 	public int getRank() { return rank; }
 	/**
-	*Metoda aktualizujaca stan przeciwnika po trafieniu pociskiem
+	*Method updating state of enemy after being hit by bullet
 	*/
 	public void hit(){
 		health--;
@@ -124,7 +155,7 @@ public class Enemy extends Engine{
 	}
 	
 	/**
-	*  aktualizacja polozenia przeciwnika
+	*  Updates position of enemy
 	*/
 	public boolean update(){
 		x += dx;
@@ -146,17 +177,9 @@ public class Enemy extends Engine{
 	}
 	
 	/**
-	*Metoda rysujaca przeciwnika
+	* Method drawing enemies
 	*/
 	public void draw(Graphics2D g, double factorWidth, double factorHeight){
-		
-		//g.setColor(color1);
-		//g.fillOval((int) x - r, (int) y - r, 2 * r, 2 * r);
-		
-		//g.setStroke(new BasicStroke(3));
-		//g.setColor(color1.darker());
-		//g.drawOval((int) x - r,(int) y - r, 2 * r, 2 * r);
-		//g.setStroke(new BasicStroke(1));
 		if(type == 1) g.drawImage(illuminatiEnemy1, (int) ((x - r)*factorWidth), (int) ((y-r)*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
 		if(type == 2) g.drawImage(illuminatiEnemy2, (int) ((x - r)*factorWidth), (int) ((y-r)*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
 		if(type == 3) g.drawImage(illuminatiEnemy3, (int) ((x - r)*factorWidth), (int) ((y-r)*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
