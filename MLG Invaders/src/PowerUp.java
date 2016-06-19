@@ -4,23 +4,57 @@ import javax.swing.ImageIcon;
 
 public class PowerUp extends Engine{
 
+	/**
+	 * Coordinate x
+	 */
 	private double x;
+	/**
+	 * Coordinate y
+	 */
 	private double y;
+	/**
+	 * Radius of power up
+	 */
 	private int r;
+	/**
+	 * Type of power up
+	 */
 	private int type;
-	private Color color1;
+	/**
+	 * Image of dorito's bonus
+	 */
 	private Image doritosBonus;
+	/**
+	 * Image of basic bonus
+	 */
 	private Image bonus1;
+	/**
+	 * Image of improved bonus
+	 */
 	private Image bonus2;
+	/**
+	 * Image of HP bonus
+	 */
 	private Image bonusHP;
 	
+	/**
+	 * x getter
+	 */
 	public double getx() { return x;}
+	/**
+	 * y getter
+	 */
 	public double gety() { return y;}
+	/**
+	 * r getter
+	 */
 	public double getr() { return r;}
 	/**
-	 * Konstruktor powerupa
+	 * Constructor of power up
+	 * @param type type of power up
+	 * @param x coordinate x
+	 * @param y coordinate y
 	 */
-	
 	public PowerUp(int type, double x, double y){
 		this.type = type;
 		this.x = x;
@@ -29,27 +63,12 @@ public class PowerUp extends Engine{
 		bonus1 = new ImageIcon(Config.getProperties().getProperty("bonus1")).getImage();
 		bonus2 = new ImageIcon(Config.getProperties().getProperty("bonus2")).getImage();
 		bonusHP = new ImageIcon(Config.getProperties().getProperty("bonusHP")).getImage();
-		
-		if(type == 1) {
-			color1 = Color.PINK;
-			r = 10;
-		}
-		if(type == 2){
-			color1 = Color.YELLOW;
-			r = 10;
-		}
-		if( type == 3){
-			color1 = Color.YELLOW;
-			r = 10;
-		}
-		if( type == 4){
-			r = 10;
-		}
+		r=10;
 	}
 	public int getType() { return type; }
 	
 	/**
-	 * aktualizuje polozenie power upa
+	 * Updates position of power up
 	 */
 	public boolean update() {
 		y += 2;
@@ -61,16 +80,12 @@ public class PowerUp extends Engine{
 		return false;
 	}
 	/**
-	 * rysuje power upa
+	 * Method drawing power-ups
+	 * @param g to draw
+	 * @param factorWidth to know how to resize width
+	 * @param factorHeight to know how to resize height
 	 */
 	public void draw(Graphics2D g, double factorWidth, double factorHeight){
-		/*g.setColor(color1);
-		g.fillRect((int) x - r, (int) y - r, 2 * r, 2 * r);
-		g.setStroke(new BasicStroke(3));
-		g.setColor(color1.darker());
-		g.drawRect((int) x - r, (int) y - r, 2 * r, 2 * r);
-		g.setStroke(new BasicStroke(1));
-		*/
 		if(type == 1) g.drawImage(bonusHP, (int) ((x - r)*factorWidth) , (int) (y*factorHeight) , (int) (25*factorWidth), (int) (28*factorHeight), null);
 		if(type == 2) g.drawImage(bonus1, (int) ((x - r)*factorWidth) , (int) (y*factorHeight) , (int) (25*factorWidth), (int) (28*factorHeight), null);
 		if(type == 3) g.drawImage(bonus2, (int) ((x - r)*factorWidth) , (int) (y*factorHeight) , (int) (25*factorWidth), (int) (28*factorHeight), null);
