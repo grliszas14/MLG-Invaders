@@ -10,17 +10,40 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 /**
-*Okienko które oczekuje wpisania nicku przy rozpoczêciu nowej gry
+* Window waiting for nickname to write in
 */
 public class Nickname {
-
-		private JFrame frame;
-		private String nickname;
-		public static int HEIGHT = 		Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
-		public static int WIDTH = 		Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
-		public static int HEIGHTPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
-		public static int WIDTHPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
+	/**
+	 * Frame of nickname window
+	 */
+	private JFrame frame;
+	/**
+	 * Variable storing nickname
+	 */
+	private String nickname;
+	/**
+	 * Height of game panel
+	 */
+	public static int HEIGHT = 		Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
+	/**
+	 * Width of game panel
+	 */
+	public static int WIDTH = 		Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
+	/**
+	 * Height of side panel
+	 */
+	public static int HEIGHTPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
+	/**
+	 * Width of side panel
+	 */
+	public static int WIDTHPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
 		
+	/**
+	 * Constructor of a class, making window to write nick in and start game
+	 * @param gameFrame 
+	 * @param gamePanel
+	 * @param logo
+	 */
 	public Nickname(JFrame gameFrame, GamePanel gamePanel, Logo logo){
 		JPanel nickPanel = new JPanel();
 		JPanel belowPanel = new JPanel();
@@ -39,9 +62,7 @@ public class Nickname {
 		nickPanel.add(belowPanel, BorderLayout.SOUTH);
 		frame.add(nickPanel);
 		frame.setVisible(true);
-		//frame.pack();
-		
-		
+	
 		ActionListener exitEvent = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				frame.dispose();
@@ -52,6 +73,7 @@ public class Nickname {
 			public void actionPerformed(ActionEvent event) {
 				nickname = nick.getText();
 				gameFrame.remove(logo);
+				
 				gameFrame.add(gamePanel, BorderLayout.CENTER);
 				gameFrame.setSize(new Dimension(WIDTH + WIDTHPANEL, HEIGHT + 100));
 				frame.dispose();
@@ -61,9 +83,5 @@ public class Nickname {
 		
 		cancel.addActionListener(exitEvent);
 		ok.addActionListener(okEvent);
-	}
-	
-	
-	
-	
+	}	
 }
