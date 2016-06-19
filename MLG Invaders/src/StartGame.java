@@ -70,7 +70,6 @@ public class StartGame {
 			ImageIcon highScoresPic = new ImageIcon("src/Icons/highScoresPic.png");
 			JMenuBar menuBar = new JMenuBar();
 			gameFrame.setJMenuBar(menuBar);
-			GamePanel gamePanel = new GamePanel(); //config
 			Logo logo = new Logo();
 			
 			
@@ -134,6 +133,7 @@ public class StartGame {
 			ActionListener startGameEvent = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					Sound.playSound("/Sounds/MLGAirHorn.wav");
+					GamePanel gamePanel = new GamePanel();
 					Nickname nicknameWindow = new Nickname(gameFrame, gamePanel, logo);
 					// TU MOZNA SIE DOBRAC DO NICKNEJMU cos ala String export = nicknameWindow.nickname;
 					//nickname.setTitle("Nickname");
