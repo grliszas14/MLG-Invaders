@@ -2,10 +2,13 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 /**
-*Klasa do odtwarzania dŸwiêków
+*Class to play sounds
 */
 public class Sound {
-
+	/**
+	 * Method to play sound
+	 * @param url path to the sound
+	 */
 	public static synchronized void playSound(final String url) {
 		new Thread(new Runnable() {
 			public void run() {
