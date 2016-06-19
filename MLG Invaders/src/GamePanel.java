@@ -189,13 +189,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		g.fillRect(0, 0, (int)(WIDTH*factorWidth), (int) (HEIGHT*factorHeight));
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-		String end = "G A M E  O V E R";
-		int lengthend = (int) g.getFontMetrics().getStringBounds(end, g).getWidth();
-		g.drawString(end, ((int)(WIDTH*factorWidth) - lengthend) / 2, (int) (HEIGHT*factorHeight) / 2 );
+		if(waveNumber < 11){
+			String end = "G A M E  O V E R";
+			int lengthend = (int) g.getFontMetrics().getStringBounds(end, g).getWidth();
+			g.drawString(end, ((int)(WIDTH*factorWidth) - lengthend) / 2, (int) (HEIGHT*factorHeight) / 2 );
+			Sound.playSound("/Sounds/IlluConfirmed.wav");
+		}
+		else {
+			String end = "YOU WIN";
+			int lengthend = (int) g.getFontMetrics().getStringBounds(end, g).getWidth();
+			g.drawString(end, ((int)(WIDTH*factorWidth) - lengthend) / 2, (int) (HEIGHT*factorHeight) / 2 );
+			Sound.playSound("/Sounds/ThugLife.wav");
+		}
+		
 		String wynik = "Twoj wynik: " + getPlayer().score;
 		int lengthwynik = (int) g.getFontMetrics().getStringBounds(wynik, g).getWidth();
 		g.drawString(wynik, ((int)(WIDTH*factorWidth) - lengthwynik)/2, (int) (HEIGHT*factorHeight) / 2 + 30);
-		Sound.playSound("/Sounds/IlluConfirmed.wav");
+		
 		g2 = (Graphics2D) this.getGraphics(); // poprzednio: Graphics g2 = this.getGraphics();
 		g2.drawImage(image,0,0,null); // na ostatnim miejscu obiekt ktory ma byc powiadomiony, ze rysowanie sie udalo tzw ImageObserver
 		g2.dispose();
@@ -328,6 +338,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 		//check dead player
 		if(player.isDead()){
+			running = false;
+			
+		}
+		//check win
+		if(waveNumber == 11){
 			running = false;
 		}
 		
@@ -472,8 +487,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 		g.drawString(power, (int) (WIDTH*factorWidth) + (WIDTHPANEL - lengthpower)/ 2, 5 * (int) (HEIGHT*factorHeight) / 12);
 		g.drawString(life, (int) (WIDTH*factorWidth) + (WIDTHPANEL - lengthlife)/ 2, 9 *(int) (HEIGHT*factorHeight) / 12);
-		//g.drawString("Score: " + getPlayer().score, 300, 530);
-		//g.drawString("Lives: " + getPlayer().lives, 300, 510);
 		g.drawString(valuescore, (int) (WIDTH*factorWidth) + (WIDTHPANEL - lengthvaluescor)/ 2, 2 * (int) (HEIGHT*factorHeight) /12);
 		g.setColor(Color.YELLOW);
 		g.fillRect((int) (WIDTH*factorWidth) + 55, 6 * (int) (HEIGHT*factorHeight) / 12, getPlayer().getPower() * 16 , 16);
@@ -534,7 +547,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 		
 		/**
-		 *  poprzednie gameDraw
 		 *  tutaj dopiero pokazujemy wszystko na ekran 
 		 */
 		
@@ -597,9 +609,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				enemies.add(new Enemy(2,1));
 				enemies.add(new Enemy(3,1));
 			}
-			if(waveNumber == 10){
-				enemies.add(new Enemy(4,1));
-			}
+		}
+		if(waveNumber == 10){
+			enemies.add(new Enemy(4,1));
 		}
 	}
 	
