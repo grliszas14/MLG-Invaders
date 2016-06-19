@@ -592,7 +592,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				enemies.add(new Enemy(1,1));
 				enemies.add(new Enemy(2,1));
 			}
-			if(waveNumber > 6 && waveNumber < 10){
+			if(waveNumber > 5 && waveNumber < 10){
 				enemies.add(new Enemy(1,1));
 				enemies.add(new Enemy(2,1));
 				enemies.add(new Enemy(3,1));

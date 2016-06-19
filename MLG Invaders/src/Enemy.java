@@ -78,7 +78,7 @@ public class Enemy extends Engine{
 			}
 		}
 		x = Math.random() * GamePanel.WIDTH / 2 + GamePanel.WIDTH / 4;
-		y = -r + 15;
+		y = r;
 		
 		double angle = 0;//;
 		rad = Math.toRadians(angle);
@@ -157,10 +157,10 @@ public class Enemy extends Engine{
 		//g.setColor(color1.darker());
 		//g.drawOval((int) x - r,(int) y - r, 2 * r, 2 * r);
 		//g.setStroke(new BasicStroke(1));
-		if(type == 1) g.drawImage(illuminatiEnemy1, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
-		if(type == 2) g.drawImage(illuminatiEnemy2, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
-		if(type == 3) g.drawImage(illuminatiEnemy3, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
-		if(type == 4) g.drawImage(illuminatiEnemy4, (int) ((x - r)*factorWidth), (int) (y*factorHeight), (int) (200*factorWidth), (int) (200*factorHeight), null);
+		if(type == 1) g.drawImage(illuminatiEnemy1, (int) ((x - r)*factorWidth), (int) ((y-r)*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
+		if(type == 2) g.drawImage(illuminatiEnemy2, (int) ((x - r)*factorWidth), (int) ((y-r)*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
+		if(type == 3) g.drawImage(illuminatiEnemy3, (int) ((x - r)*factorWidth), (int) ((y-r)*factorHeight), (int) (50*factorWidth), (int) (52*factorHeight), null);
+		if(type == 4) g.drawImage(illuminatiEnemy4, (int) ((x - r)*factorWidth), (int) ((y-r)*factorHeight), (int) (200*factorWidth), (int) (200*factorHeight), null);
 	}
 	
 }
