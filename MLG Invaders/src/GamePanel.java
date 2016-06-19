@@ -8,63 +8,128 @@ import java.awt.event.*;
 
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 	
-	
+	/**
+	 * Main thread of the game
+	 */
 	private Thread 	thread;
+	/**
+	 * Variable on which depends execute of main loop of the game
+	 */
 	private boolean running;
+	/**
+	 * Variable needed to pause the thread
+	 */
 	private boolean suspended;
 	
-	
+	/**
+	 * Height of the game panel
+	 */
 	public static int HEIGHT = 		Integer.parseInt(Config.getProperties().getProperty("GameHeight"));	
+	/**
+	 * Width of the game panel
+	 */
 	public static int WIDTH = 		Integer.parseInt(Config.getProperties().getProperty("GameWidth"));	
+	/**
+	 * Height of the side panel
+	 */
 	public static int HEIGHTPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelHeight"));	
+	/**
+	 * Width of the side panel
+	 */
 	public static int WIDTHPANEL =	Integer.parseInt(Config.getProperties().getProperty("SidePanelWidth"));	
 	
+	/**
+	 * Surface on which game is draw
+	 */
 	private BufferedImage image;
+	/**
+	 * First draw buffer
+	 */
 	private Graphics2D 	g;
+	/**
+	 * Second draw buffer
+	 */
 	private Graphics2D 	g2;
+	/**
+	 * Number of frames per second
+	 */
 	private int FPS = 				Integer.parseInt(Config.getProperties().getProperty("FPS"));
+	/**
+	 * Average number of frames per second
+	 */
 	private double averageFPS;
-	private int numberOfEnemies = 	Integer.parseInt(Config.getProperties().getProperty("numberOfEnemies"));
-	
+	/**
+	 * Variable storing player
+	 */
 	private static Player player;
+	/**
+	 * Bullet container
+	 */
 	public static ArrayList<Bullet> 	bullets;
+	/**
+	 * Enemy container
+	 */
 	public static ArrayList<Enemy> 		enemies;
+	/**
+	 * Power-up container
+	 */
 	public static ArrayList<PowerUp> 	powerups;
+	/**
+	 * Bomb container
+	 */
 	public static ArrayList<Bomb> 		bombs;
+	/**
+	 * Explosion container
+	 */
 	public static ArrayList<Explosion> 	explosions;
+	/**
+	 * Variable storing background image
+	 */
 	private Image background;
-	
-	
+	/**
+	 * Variable needed to handle mechanism of following levels
+	 */
 	private long waveStartTimer;
+	/**
+	 * Variable needed to handle mechanism of following levels
+	 */
 	private long waveStartTimerDiff;
+	/**
+	 * Variable storing number of current wave
+	 */
 	private int waveNumber;
+	/**
+	 * Variable needed to start the mechanism of following levels
+	 */
 	private boolean waveStart;
+	/**
+	 * Delay between following levels
+	 */
 	private int waveDelay = 2000;
+	/**
+	 * Currently checked height of game panel
+	 */
 	private double newHeight;
+	/**
+	 * Currently checked width of game panel
+	 */
 	private double newWidth;
+	/**
+	 * Width zoom factor 
+	 */
 	private double factorWidth;
+	/**
+	 * Height zoom factor
+	 */
 	private double factorHeight;
-	// pars
-	
-	// tests 15.05.16
-	/**
-	 * Ukryty bufor
-	 */
-	//Image offscr = null;
-	
-	/**
-	 * kontekst graficzny ukrytego bufora
-	 */
-	//Graphics offscrgr = null;
 	
 	
 	/**
-	 * create JPanel 
-	 * focus
+	 * This method creates game panel
 	 */
 	public GamePanel( ){ 
-		super();	// create JPanel with double buffer
-		setPreferredSize(new Dimension(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL)); //TU TRZEBA BEDZIE DODAC FUNKCJE DOWOLNEGO ROZSZERZANIA OKNA
+		super();
+		setPreferredSize(new Dimension(WIDTH + WIDTHPANEL, HEIGHT + HEIGHTPANEL));
 		setFocusable(true);
 		//requestFocus();
 		//setEnabled(true);
@@ -83,19 +148,27 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		
 	}
 	
+	/**
+	 * Method to pause the thread
+	 */
 	public void suspend(){
 		suspended = true;
 	}
 	
+	/**
+	 * Method to resume the thread
+	 */
 	public void resume(){
 		suspended = false;
 		notify();
 	}
 	/**
 	 * Load background
-	 * Create ArrayLists for enemies and bullets
+	 * Create ArrayLists for enemies, bullets, bombs, power-ups, explosions
 	 * Adding enemies
-	 * Game loop, FPS
+	 * Main loop of the game
+	 * Mechanism of frames per second
+	 * Double-buffered drawing
 	 */
 	public void run(){
 		running = true;
@@ -215,6 +288,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	/**
 	 * Player, Bullet, Enemy update and collisions
 	 * drawing window, player, enemies, bullets
+	 * Adding new waves of enemies
 	 */
 	private void gameUpdate(){
 		
@@ -456,19 +530,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				
 			}
 		}
-		
-		/**
-		 *  Tworzy okno i rysuje 
-		 */
-		
 			
 		g.setColor(Color.WHITE);
 		g.drawImage(background,0,0,(int) (WIDTH*factorWidth), (int)(HEIGHT*factorHeight), null);
 		g.fillRect((int) (WIDTH*factorWidth),0,WIDTHPANEL,(int) (HEIGHTPANEL*factorHeight));
-		//g.setColor(Color.BLACK);
-		//g.drawString("FPS: " + averageFPS,440,300);
-		
-		
+	
 		String scor = "Wynik: ";
 		String life = "Zycia:";
 		String power = "Moc: ";
@@ -545,55 +611,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 		
 		
-		
-		/**
-		 *  tutaj dopiero pokazujemy wszystko na ekran 
-		 */
-		
-		g2 = (Graphics2D) this.getGraphics(); // poprzednio: Graphics g2 = this.getGraphics();
-		g2.drawImage(image,0,0,null); // na ostatnim miejscu obiekt ktory ma byc powiadomiony, ze rysowanie sie udalo tzw ImageObserver
+		g2 = (Graphics2D) this.getGraphics();
+		g2.drawImage(image,0,0,null);
 		g2.dispose();
 	}
 	
 	
 	/**
-	 * tworzy przeciwnikow w zaleznosci od numeru fali
+	 * Creates new enemies depending on number of wave
 	 */
 	private void createNewEnemies(){
 		
 		enemies.clear();
 		Enemy e;
 		
-		/*if(waveNumber == 1) {
-			for(int i = 0; i < 4; i++){
-				enemies.add(new Enemy(1,1));
-			}
-		}
-		if(waveNumber == 2) {
-			for(int i = 0; i < 8; i++){
-				enemies.add(new Enemy(1,1));
-			}
-		}
-		if(waveNumber == 3) {
-			for(int i = 0; i < 8; i++){
-				enemies.add(new Enemy(1,1));
-			}
-			for(int i = 0; i < 4; i++){
-				enemies.add(new Enemy(2,1));
-			}
-		}
-		if(waveNumber == 4) {
-			for(int i = 0; i < 4; i++){
-				enemies.add(new Enemy(1,1));
-			}
-			for(int i = 0; i < 4; i++){
-				enemies.add(new Enemy(2,1));
-			}
-			for(int i = 0; i < 4; i++){
-				enemies.add(new Enemy(3,1));
-			}
-		}
-		*/
 		for(int i = 0; i < waveNumber; i++){
 			
 			if(waveNumber == 1 || waveNumber == 2){
@@ -674,12 +705,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		}
 	}
 
-
+	/**
+	 * Method returning current player
+	 * @return player
+	 */
 	public static Player getPlayer() {
 		return player;
 	}
 
-
+	/**
+	 * Method setting a player
+	 * @param player
+	 */
 	public static void setPlayer(Player player) {
 		GamePanel.player = player;
 	}
