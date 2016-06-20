@@ -64,7 +64,6 @@ public class StartGame {
 			gameFrame = new JFrame();
 			gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			ImageIcon startGamePic = new ImageIcon("src/Icons/startGamePic.png");
-			ImageIcon optionsPic = new ImageIcon("src/Icons/optionsPic.png");
 			ImageIcon highScoresPic = new ImageIcon("src/Icons/highScoresPic.png");
 			JMenuBar menuBar = new JMenuBar();
 			gameFrame.setJMenuBar(menuBar);
@@ -79,24 +78,20 @@ public class StartGame {
 			 * Adding buttons
 			 */
 			JMenuItem newGame = new JMenuItem("Nowa gra");
-			JMenuItem options = new JMenuItem("Opcje");
-			JMenuItem exit = new JMenuItem("WyjÅ“cie");
+			JMenuItem exit = new JMenuItem("Wyjscie");
 			JMenuItem instructions = new JMenuItem("Instrukcja gry");
 			JMenuItem aboutUs = new JMenuItem("O nas");
 			file.add(newGame);
-			file.add(options);
 			file.add(exit);
 			help.add(instructions);
 			help.add(aboutUs);
 			
 			JButton newGame_Button = new JButton(startGamePic);
-			JButton options_Button = new JButton(optionsPic);
 			JButton highScores_Button = new JButton(highScoresPic);
 		
 			gameFrame.add(logo, BorderLayout.CENTER);
 			JToolBar toolbar = new JToolBar();
 			toolbar.add(newGame_Button);
-			toolbar.add(options_Button);
 			toolbar.add(highScores_Button);
 			gameFrame.add(toolbar, BorderLayout.NORTH);
 			gameFrame.setVisible(true);
@@ -130,7 +125,7 @@ public class StartGame {
 			ActionListener instructionsEvent = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					JOptionPane.showMessageDialog(null,
-							"SzczegÃ³Â³owe zasady gry: ", "Instructions", JOptionPane.INFORMATION_MESSAGE);
+							"Szczegolowe zasady gry: ", "Instructions", JOptionPane.INFORMATION_MESSAGE);
 				}
 			};
 			
