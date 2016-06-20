@@ -125,7 +125,7 @@ public class StartGame {
 			ActionListener instructionsEvent = new ActionListener() {
 				public void actionPerformed(ActionEvent event) {
 					JOptionPane.showMessageDialog(null,
-							"Szczegolowe zasady gry: ", "Instructions", JOptionPane.INFORMATION_MESSAGE);
+							"Szczegolowe zasady gry: \nZabijaj przeciwnikow, unikaj spadajacych bomb\nzbieraj wypadajace bonusy\nSTEROWANIE:\nPoruszanie sie postacia: strzałki\nStrzał: SPACJA\nPauzowanie gry: p", "Instructions", JOptionPane.INFORMATION_MESSAGE);
 				}
 			};
 			
